@@ -12,7 +12,6 @@ class User {
     this.pets.push(newPet);
   }
   countPets() {
-    console.log(`Cantidad de mascotas: ${this.pets.length}`)
     return this.pets.length;
   }
   addBook(name, author) {
@@ -40,6 +39,7 @@ let user = new User("Felipe", "Pardo", books, pets);
 user.addPet("fish"); // Agrega nueva mascota
 user.addBook("1984", "George Orwell"); // Agrega un libro
 
+
 console.log(user);
-console.log(user.countPets()) // Cuenta la cantidad de mascotas)
+console.log(`Cantidad de mascotas: ${user.countPets()}`) // Cuenta la cantidad de mascotas)
 console.log(user.getBookNames()) // Retorna nombres de los libros
