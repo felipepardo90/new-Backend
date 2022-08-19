@@ -31,3 +31,11 @@ new Promise((resolve, reject))
 
 Una ejecución sincrónica es cuando escribimos más de una instrucción en un programa, esperamos que las instrucciones se ejecuten comenzando desde la primera línea.
 
+# Timers
+
+setTimeout(cb, miliseconds) - solo corre el temporizador una sola vez
+setInterval(cb, miliseconds) - corre el programa las veces que sea necesario
+
+
+
+## MANEJO DE ARCHIVOS EN JAVASCRIPT
