@@ -1,14 +1,32 @@
 [
-  {
-    "title": "Guitarra Alpujarra",
-    "price": 99989
-  },
-  {
-    "title": "Bombo legüero",
-    "price": 8900
-  },
-  {
-    "title": "Violín",
-    "price": 74500
-  }
+ {
+  "title": "Guitarra Alpujarra",
+  "price": 99989,
+  "thumbnail": "guitarra.lalala",
+  "id": 1
+ },
+ {
+  "title": "Bombo legüero",
+  "price": 8900,
+  "thumbnail": "bombo.lalala",
+  "id": 2
+ },
+ {
+  "title": "Violín",
+  "price": 74500,
+  "thumbnail": "https://th.bing.com/th/id/R.d17cfb95d1f5b067f573e89e4ab70e98?rik=okWe3Nn%2b3DZhpg&pid=ImgRaw&r=0",
+  "id": 3
+ },
+ {
+  "title": "Violín",
+  "price": 74500,
+  "thumbnail": "https://th.bing.com/th/id/R.d17cfb95d1f5b067f573e89e4ab70e98?rik=okWe3Nn%2b3DZhpg&pid=ImgRaw&r=0",
+  "id": 4
+ },
+ {
+  "title": "Violín",
+  "price": 74500,
+  "thumbnail": "https://th.bing.com/th/id/R.d17cfb95d1f5b067f573e89e4ab70e98?rik=okWe3Nn%2b3DZhpg&pid=ImgRaw&r=0",
+  "id": 5
+ }
 ]
