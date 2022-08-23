@@ -30,7 +30,7 @@ class Container {
         return object.id;
       }
     } catch (error) {
-      console.log(`Se produjo un error en save:${error}`);
+      console.error(`Se produjo un error en save:${error}`);
     }
   }
 
@@ -95,7 +95,7 @@ class Container {
         console.log(`No se ha encontrado el objeto con id: ${idEntered}`);
       }
     } catch (error) {
-      console.log(`Se ha producido un error en deleteById: ${error}`);
+      console.error(`Se ha producido un error en deleteById: ${error}`);
     }
   }
 
@@ -106,7 +106,7 @@ class Container {
       // * Borrado de todos los objetos (Se sobreescribe el archivo a un array vacío)
       await fs.writeFileSync(this.file, "[]");
     } catch (error) {
-      console.log(`Se ha producido un error en deleteAll: ${error}`);
+      console.error(`Se ha producido un error en deleteAll: ${error}`);
     }
   }
 }
