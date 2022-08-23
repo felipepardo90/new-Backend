@@ -10,7 +10,7 @@ class Container {
 
     const dataToParse = await fs.readFileSync(this.file, "utf-8");
     const dataParsed = JSON.parse(dataToParse);
-    // ? ¿El producto ya existe en el archivo?
+    // * ¿El producto ya existe en el archivo?
     const productFound = dataParsed.find(({ title }) => title == object.title);
 
     try {
@@ -23,7 +23,7 @@ class Container {
         dataParsed.push(object);
         const updatedFile = JSON.stringify(dataParsed, null, " ");
         fs.writeFileSync(this.file, updatedFile);
-        // ? console.log(updatedFile, "Aquí 23");
+        // ! console.log(updatedFile, "Aquí 23");
         console.log(
           `Se ha agregado el siguiente producto: ${object.title} con el id ${object.id}`
         );
@@ -39,7 +39,7 @@ class Container {
 
     const dataToParse = await fs.readFileSync(this.file, "utf-8");
     const dataParsed = JSON.parse(dataToParse);
-    // ? ¿El producto ya existe en el archivo?
+    // * ¿El producto ya existe en el archivo?
     const idFound = dataParsed.find(({ id }) => id === idEntered);
 
     try {
@@ -79,29 +79,35 @@ class Container {
     const dataToParse = await fs.readFileSync(this.file, "utf-8");
     const dataParsed = JSON.parse(dataToParse);
     // * Se filtran los productos que no cumplen las condiciones (coincidir con el id proporcionado)
-    const leakedID = dataParsed.filter(({id}) =>  id !== idEntered)
+    const leakedID = dataParsed.filter(({ id }) => id !== idEntered);
     // * Encuentra el producto con el id proporcionado
     const idFound = dataParsed.find(({ id }) => id === idEntered);
 
     try {
       if (idFound) {
-        console.log(`Se ha eliminado el objeto con id:${idEntered} >> [[${idFound.title}]]`)
+        console.log(
+          `Se ha eliminado el objeto con id:${idEntered} >> [[${idFound.title}]]`
+        );
         // * Se actualiza el archivo
         const updatedFile = JSON.stringify(leakedID, null, " ");
         fs.writeFileSync(this.file, updatedFile);
-        
       } else {
         console.log(`No se ha encontrado el objeto con id: ${idEntered}`);
       }
     } catch (error) {
-      console.log(`Se ha producido un error en deleteById: ${error}`)
+      console.log(`Se ha producido un error en deleteById: ${error}`);
     }
   }
 
   async deleteAll() {
-    console.log("Todos los objetos fueron eliminados")
-    // * Borrado de todos los objetos (Se sobreescribe el archivo a un array vacío)
-    await fs.writeFileSync(this.file, "[]")
+    // ? Elimina todos los objetos presentes en el archivo
+    try {
+      console.log("Todos los objetos fueron eliminados");
+      // * Borrado de todos los objetos (Se sobreescribe el archivo a un array vacío)
+      await fs.writeFileSync(this.file, "[]");
+    } catch (error) {
+      console.log(`Se ha producido un error en deleteAll: ${error}`);
+    }
   }
 }
 
@@ -115,8 +121,7 @@ let newObject = {
     "https://th.bing.com/th/id/R.d17cfb95d1f5b067f573e89e4ab70e98?rik=okWe3Nn%2b3DZhpg&pid=ImgRaw&r=0",
 };
 
-
-//? Descomentar para correr las funciones
+//TODO Descomentar para correr las funciones
 
 // contenedor.save(newObject);
 // contenedor.getById(3)
