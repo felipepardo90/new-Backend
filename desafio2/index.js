@@ -118,12 +118,20 @@ let newObject = {
   title: "Violín",
   price: 74500,
   thumbnail:
-    "https://th.bing.com/th/id/R.d17cfb95d1f5b067f573e89e4ab70e98?rik=okWe3Nn%2b3DZhpg&pid=ImgRaw&r=0",
+    "violin.lalala"
+};
+
+let anotherObject = {
+  title: "Bajo",
+  price: 50000,
+  thumbnail:
+    "bajo.lalala",
 };
 
 //TODO Descomentar para correr las funciones
 
-// contenedor.save(newObject);
+contenedor.save(newObject);
+contenedor.save(anotherObject);
 // contenedor.getById(3)
 // contenedor.getAll();
 // contenedor.deleteById(4)

@@ -16,5 +16,11 @@
   "price": 74500,
   "thumbnail": "violin.lalala",
   "id": 3
+ },
+ {
+  "title": "Bajo",
+  "price": 50000,
+  "thumbnail": "bajo.lalala",
+  "id": 4
  }
 ]
