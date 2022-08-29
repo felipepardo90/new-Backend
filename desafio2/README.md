@@ -1,10 +1,10 @@
 # CLASE 3
 
-# Programación Sincrónica y Asincrónica
+## Programación Sincrónica y Asincrónica
 
 Funciones anónimas -- ¿van dentro de una variable?,¿qué son los métodos?
 
-# Promesas : Permiten definir desde afuera de una función un bloque de código
+## Promesas : Permiten definir desde afuera de una función un bloque de código
 
 Tiene tres (3) estados: 
 
@@ -30,20 +30,20 @@ new Promise((resolve, reject))
 
 "
 
-# Ejecución sincrónica y asincrónica
+## Ejecución sincrónica y asincrónica
 
 Una ejecución sincrónica es cuando escribimos más de una instrucción en un programa, esperamos que las instrucciones se ejecuten comenzando desde la primera línea.
 
-# Timers
+## Timers
 
 setTimeout(cb, miliseconds) - solo corre el temporizador una sola vez
 setInterval(cb, miliseconds) - corre el programa las veces que sea necesario
 
 
 
-## MANEJO DE ARCHIVOS EN JAVASCRIPT
+# MANEJO DE ARCHIVOS EN JAVASCRIPT
 
-# Módulo FS
+## Módulo FS
 
 Es la abreviatura en inglés para File System. Es uno de los módulos más básicos y útiles de NodeJS
 Con esto es posible manejar archivos (crear, leer, modificar, etc)
@@ -54,7 +54,7 @@ const fs = require("fs")
 
  ```
 
-# Modo Sincrónico
+## Modo Sincrónico
 
 Las funciones sincrónicas terminan con "Sync"
 Son operaciones bloqueantes que devuelven un resultado
@@ -90,7 +90,7 @@ const data = fs.unlinkSync("./ruta-del-archivo.json")
             - El único parámetro es un string con la ruta del archivo que queremos borrar
 + mkdirSync: creación de una carpeta.
 
-# Manejo de errores
+## Manejo de errores
 
 Ante una situación de error, las excepciones se lanzan inmediatamente y se pueden manejar usando try... catch.
 Esta forma de capturar errores se puede utilizar en todas las funciones sincrónicas de acceso al sistema de archivos. 
