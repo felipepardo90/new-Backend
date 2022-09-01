@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const Container = require("./Contenedor");
-const contenedor = new Container("./products.json");
+const contenedor = new Container("desafio3/products.json");
 
 //? Settings
 
