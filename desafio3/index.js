@@ -7,6 +7,10 @@ const contenedor = new Container("./products.json");
 
 app.set("port", 8080); //*Configuración puerto
 
+//? Middlewares
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 //? Routes
 
 app.get("/", (req, res) => {
@@ -19,15 +23,16 @@ app.get("/products", async (req, res) => {
 });
 
 app.get("/randomProduct", async (req, res) => {
-    //! Números aleatorios del 1 al 10
+  //! Números aleatorios del 1 al 10
   let randomNum = Math.floor(Math.random() * 9 + 1);
   let data = await contenedor.getById(randomNum);
   //! Si el id generado no coincide con ningún producto, devuelve null; de lo contrario, envía la información solicitada
   data === null
-    ? res.send(`<h4>ID:${randomNum} >> [[ERROR]] No se ha encontrado el producto</h4>`)
+    ? res.send(
+        `<h4>ID:${randomNum} >> [[ERROR]] No se ha encontrado el producto</h4>`
+      )
     : res.json(data);
 });
-
 
 //? Servidor iniciado
 
