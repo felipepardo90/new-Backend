@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start" : "node desafio3/index.js"
+    "start" : "nodemon desafio4/server.js"
   },
   "dependencies": {
     "express": "^4.18.1",
