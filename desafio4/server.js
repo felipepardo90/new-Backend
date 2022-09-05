@@ -7,7 +7,7 @@ const contenedor = new Container("./products.json");
 //? Settings
 
 app.set("port", 8080); //*Configuración puerto
-app.set("json spaces", 2);
+app.set("json spaces", 2); //* JSON formatter
 
 //? Middlewares
 app.use(express.urlencoded({ extended: false }));
