@@ -1,15 +1,18 @@
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
 const Container = require("./Contenedor");
 const contenedor = new Container("./products.json");
 
 //? Settings
 
 app.set("port", 8080); //*Configuración puerto
+app.set("json spaces", 2);
 
 //? Middlewares
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(morgan("dev"));
 
 //? Routes
 
@@ -17,28 +20,32 @@ app.use(express.json());
 
 app.get("/api/products", async (req, res) => {
   const data = await contenedor.getAll();
-  res.json(data);
+  res.status(200).json(data);
 });
 
 //* DEVUELVE UN PRODUCTO SEGÚN SU ID
 
 app.get("/api/products/:id", async (req, res) => {
-  const idParam = req.params.id;
-  const data = await contenedor.getById(idParam);
+  const data = await contenedor.getById(req.params.id);
 
   //! Si el id generado no coincide con ningún producto, devuelve null; de lo contrario, envía la información solicitada
   data === null
-    ? res.send({ error: "Producto no encontrado" })
-    : res.json(data);
+    ? res.status(404).json({ error: "Producto no encontrado" })
+    : res.status(200).json(data);
 });
 
-// app.post("/api/products", (req, res) => {
-//     const {title, price, thumbnail} = req.body
-//     contenedor.save({title, price, thumbnail})
+//* RECIBE Y AGREGA UN PRODUCTO, Y LO DEVUELVE CON SU ID ASIGNADO
 
-//     res.send(`Se agregó un nuevo producto: ${title}`)
+app.post("/api/products", async (req, res) => {
+  const { title, price, thumbnail } = req.body;
+  const data = await contenedor.save({ title, price, thumbnail });
 
-// });
+  data === null &&
+    res.status(500).json({ message: "El producto ya existe en el archivo" });
+  title && price && thumbnail
+    ? res.status(200).json(data)
+    : res.status(500).json({ error: "Complete los datos restantes" });
+});
 
 // app.put("/", (req, res) => {
 //   res.send("<h1 style='color:blue'>HOLA SERVIDOR</h1>");

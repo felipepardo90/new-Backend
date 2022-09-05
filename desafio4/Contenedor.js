@@ -13,23 +13,19 @@ class Container {
       const dataParsed = JSON.parse(dataToParse);
       // * ¿El producto ya existe en el archivo?
       const productFound = dataParsed.find(
-        ({ title }) => title == object.title
+        ({ title }) => title === object.title
       );
 
       if (productFound) {
-        // * Si el producto ya existe, avisa por consola y no lo agrega
-        console.log("El producto ya existe en el archivo");
+        // * Si el producto ya existe, retorna null
+        return null
       } else {
-        // * Si no existe, lo agrega y retorna el id asignado
+        // * Si no existe, lo agrega y retorna el objeto con id asignado
         object.id = dataParsed.length + 1;
         dataParsed.push(object);
         const updatedFile = JSON.stringify(dataParsed, null, " ");
         fs.promises.writeFile(this.file, updatedFile);
-        // ! console.log(updatedFile, "Aquí 23");
-        console.log(
-          `Se ha agregado el siguiente producto: ${object.title} con el id ${object.id}`
-        );
-        return object.id;
+        return object;
       }
     } catch (error) {
       console.error(`Se produjo un error en save:${error}`);
