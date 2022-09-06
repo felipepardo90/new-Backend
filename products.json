@@ -34,5 +34,29 @@
   "price": 123456,
   "thumbnail": "lalala.com",
   "id": 6
+ },
+ {
+  "title": "un producto",
+  "price": 123456,
+  "thumbnail": "otroproducto.lalala",
+  "id": 7
+ },
+ {
+  "title": "otro producto",
+  "price": 123456,
+  "thumbnail": "otroproducto.lalala",
+  "id": 8
+ },
+ {
+  "title": "un producto más la puta que lo parió",
+  "price": 123456,
+  "thumbnail": "otroproducto.lalala",
+  "id": 9
+ },
+ {
+  "title": "otro producto el décimo",
+  "price": 123456,
+  "thumbnail": "otroproducto.lalala",
+  "id": 10
  }
 ]

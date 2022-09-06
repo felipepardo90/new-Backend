@@ -10,9 +10,22 @@ app.set("port", 8080); //*Configuración puerto
 app.set("json spaces", 2); //* JSON formatter
 
 //? Middlewares
+
+//! completedFields revisará si el input del formulario o la query recibe todos los parámetros solicitados // Método POST
+
+const completedFields = (req, res, next) => {
+  const { title, price, thumbnail } = req.body;
+  title && price && thumbnail
+    ? next()
+    : res.status(500).send({ message: "Debe completar todos los campos" });
+};
+
+//!
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
+// app.use(completedFields);
 
 //? Routes
 
@@ -36,11 +49,11 @@ app.get("/api/products/:id", async (req, res) => {
 
 //* RECIBE Y AGREGA UN PRODUCTO, Y LO DEVUELVE CON SU ID ASIGNADO
 
-app.post("/api/products", async (req, res) => {
+app.post("/api/products", completedFields, async (req, res) => {
   const { title, price, thumbnail } = req.body;
   const data = await contenedor.save({ title, price, thumbnail });
-  data === null
-    ? res.status(500).json({ message: "El producto ya existe en el archivo" })
+  data  
+    ? res.status(500).json({ message: `El producto >> ${data.title} << ya existe en el archivo`})
     : res.status(200).json(data);
 
   // data !== false
