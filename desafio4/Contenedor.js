@@ -42,10 +42,10 @@ class Container {
       const idFound = dataParsed.find(({ id }) => id == idEntered);
 
       if (idFound) {
-        //* console.table(idFound);
+        console.log(`Se obtuvo el producto ${idFound.title}`);
         return idFound;
       } else {
-        return null;
+        console.log("No se han encontrado productos")
       }
     } catch (error) {
       console.error(`Se produjo un error en getByID: ${error}`);
@@ -76,9 +76,9 @@ class Container {
       const dataToParse = await fs.promises.readFile(this.file, "utf-8");
       const dataParsed = JSON.parse(dataToParse);
       // * Se filtran los productos que no cumplen las condiciones (coincidir con el id proporcionado)
-      const leakedID = dataParsed.filter(({ id }) => id !== idEntered);
+      const leakedID = dataParsed.filter(({ id }) => id != idEntered);
       // * Encuentra el producto con el id proporcionado
-      const idFound = dataParsed.find(({ id }) => id === idEntered);
+      const idFound = dataParsed.find(({ id }) => id == idEntered);
 
       if (idFound) {
         console.log(
@@ -87,6 +87,7 @@ class Container {
         // * Se actualiza el archivo
         const updatedFile = JSON.stringify(leakedID, null, " ");
         fs.promises.writeFile(this.file, updatedFile);
+        return idFound
       } else {
         console.log(`No se ha encontrado el objeto con id: ${idEntered}`);
       }

@@ -29,9 +29,9 @@ app.get("/api/products/:id", async (req, res) => {
   const data = await contenedor.getById(req.params.id);
 
   //! Si el id generado no coincide con ningún producto, devuelve null; de lo contrario, envía la información solicitada
-  data === null
-    ? res.status(404).json({ error: "Producto no encontrado" })
-    : res.status(200).json(data);
+  data
+    ? res.status(200).json(data)
+    : res.status(404).json({ error: "Producto no encontrado" });
 });
 
 //* RECIBE Y AGREGA UN PRODUCTO, Y LO DEVUELVE CON SU ID ASIGNADO
@@ -39,20 +39,26 @@ app.get("/api/products/:id", async (req, res) => {
 app.post("/api/products", async (req, res) => {
   const { title, price, thumbnail } = req.body;
   const data = await contenedor.save({ title, price, thumbnail });
-  (title && price && thumbnail) ||
-    res.status(500).json({ error: "Complete los datos restantes" });
   data === null
     ? res.status(500).json({ message: "El producto ya existe en el archivo" })
     : res.status(200).json(data);
+
+  // data !== false
+  //   ? res.status(500).json({ error: "Complete los datos restantes" })
 });
 
 // app.put("/", (req, res) => {
 //   res.send("<h1 style='color:blue'>HOLA SERVIDOR</h1>");
 // });
 
-// app.delete("/", (req, res) => {
-//   res.send("<h1 style='color:blue'>HOLA SERVIDOR</h1>");
-// });
+app.delete("/api/products/:id", async (req, res) => {
+  const data = await contenedor.deleteById(req.params.id);
+  data
+    ? res
+        .status(200)
+        .send({ message: `Se ha eliminado el producto ${data.title}` })
+    : res.status(404).send({ message: "No se ha encontrado el producto" });
+});
 
 //? Servidor iniciado
 

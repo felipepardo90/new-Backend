@@ -28,5 +28,11 @@
   "price": 84768,
   "thumbnail": "acordeon.lalala",
   "id": 5
+ },
+ {
+  "title": "Bajo",
+  "price": 123456,
+  "thumbnail": "lalala.com",
+  "id": 6
  }
 ]
