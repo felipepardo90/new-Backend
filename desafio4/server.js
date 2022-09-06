@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const Container = require("./Contenedor");
-const contenedor = new Container("./products.json");
+const contenedor = new Container("products.json");
 
 //? Settings
 
@@ -39,12 +39,11 @@ app.get("/api/products/:id", async (req, res) => {
 app.post("/api/products", async (req, res) => {
   const { title, price, thumbnail } = req.body;
   const data = await contenedor.save({ title, price, thumbnail });
-
-  data === null &&
-    res.status(500).json({ message: "El producto ya existe en el archivo" });
-  title && price && thumbnail
-    ? res.status(200).json(data)
-    : res.status(500).json({ error: "Complete los datos restantes" });
+  (title && price && thumbnail) ||
+    res.status(500).json({ error: "Complete los datos restantes" });
+  data === null
+    ? res.status(500).json({ message: "El producto ya existe en el archivo" })
+    : res.status(200).json(data);
 });
 
 // app.put("/", (req, res) => {
