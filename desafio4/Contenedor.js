@@ -18,7 +18,7 @@ class Container {
 
       if (productFound) {
         // * Si el producto ya existe, retorna null
-        return null
+        return null;
       } else {
         // * Si no existe, lo agrega y retorna el objeto con id asignado
         object.id = dataParsed.length + 1;
