@@ -2,23 +2,23 @@
 
 ## MVC
 
-# Model View Controller
+### Model View Controller
 
 El controlador se encargará de obtener la plantilla desde el modelo.
 Es el cerebro de estos motores, ya que aquí es donde se encuentra la lógica.
 
-# Motores de plantilla
+## Motores de plantilla
 
 - Un motor de plantillas lee un archivo de texto que contiene la presentación ya preparada en un lenguaje pseudo HTML. e inserta en él la información dinámica que le ordena el "controlador"
 - La sintaxis depende del motor de plantillas utilizado
 
-# Ventajas
+### Ventajas
 
 - El código es más organizado, y tenemos garantía de que no habrá HTML mal formado.
 - Podemos separar nuestro equipo en dos, al trabajar interfaces de usuario sin necesidad de desarrollar en Backend
 - Los motores de plantilla nos permiten reutilizar secciones de código ayudando a mantener nuestro proyecto optimizado.
 
-# Desventajas
+### Desventajas
 
 - La no utilización de un motor de plantillas puede afectar la velocidad de nuestro desarrollos de aplicaciones
 - El riesgo de hacer HTML mal formado es mucho mayor
@@ -37,7 +37,7 @@ Hola {{nombre}}
 
 ```
 
-### Handlebars
+## Handlebars
 
 - Handlebars es un lenguaje de plantillas simple
 - Utiliza una plantilla y un objeto de entrada para generar un HTML, u otros formatos de texto.
@@ -56,7 +56,7 @@ Hola {{nombre}}
 </script>
 ```
 
-# Creando un motor de plantillas custom para express
+### Creando un motor de plantillas custom para express
 
 - Utilizamos el método
 
@@ -121,7 +121,7 @@ app.get("/", (req, res) => {
 npm i express-handlebars
 ```
 
-#### Configuración
+### Configuración
 
 ```javascript
 
