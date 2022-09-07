@@ -1,12 +1,23 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+
+//! Contenedor con persistencia en ARRAY
+
+const arrayProducts = [
+  { title: "un producto", price: 213456, thumbnail: "URL1", id: 1 },
+  { title: "otro producto", price: 1111, thumbnail: "URL2", id: 2 },
+];
 const Container = require("./Contenedor");
-const contenedor = new Container("products.json");
+const contenedor = new Container(arrayProducts);
+
+console.log(arrayProducts);
+
+//!
 
 //? Settings
 
-app.set("port", 8080); //*Configuración puerto
+app.set("port", 8080); //* Configuración puerto
 app.set("json spaces", 2); //* JSON formatter
 
 //? Middlewares
@@ -17,7 +28,7 @@ const completedFields = (req, res, next) => {
   const { title, price, thumbnail } = req.body;
   title && price && thumbnail
     ? next()
-    : res.status(500).send({ message: "Debe completar todos los campos" });
+    : res.status(300).send({ message: "Debe completar todos los campos" });
 };
 
 //!
@@ -25,7 +36,7 @@ const completedFields = (req, res, next) => {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
-// app.use(completedFields);
+app.use("/", express.static(__dirname + "/public"));
 
 //? Routes
 
@@ -52,17 +63,21 @@ app.get("/api/products/:id", async (req, res) => {
 app.post("/api/products", completedFields, async (req, res) => {
   const { title, price, thumbnail } = req.body;
   const data = await contenedor.save({ title, price, thumbnail });
-  data  
-    ? res.status(500).json({ message: `El producto >> ${data.title} << ya existe en el archivo`})
+  data == null
+    ? res.status(500).json({ message: ` [[${title}]] ya existe en el archivo` })
     : res.status(200).json(data);
 
-  // data !== false
-  //   ? res.status(500).json({ error: "Complete los datos restantes" })
 });
 
-// app.put("/", (req, res) => {
-//   res.send("<h1 style='color:blue'>HOLA SERVIDOR</h1>");
-// });
+app.put("/api/products/:id", (req, res) => {
+
+
+
+  res.send("<h1 style='color:blue'>HOLA SERVIDOR</h1>");
+
+
+
+});
 
 app.delete("/api/products/:id", async (req, res) => {
   const data = await contenedor.deleteById(req.params.id);
