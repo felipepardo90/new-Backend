@@ -2,18 +2,28 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 
-//! Contenedor con persistencia en ARRAY
+//? Contenedor con persistencia en ARRAY con 2 productos agregados para consultas y pruebas
 
 const arrayProducts = [
-  { title: "un producto", price: 213456, thumbnail: "URL1", id: 1 },
-  { title: "otro producto", price: 1111, thumbnail: "URL2", id: 2 },
+  {
+    title: "Guitarra Alpujarra",
+    price: 99989,
+    thumbnail: "guitarra.lalala",
+    id: 1,
+  },
+  {
+    title: "Bombo legüero",
+    price: 62999,
+    thumbnail: "bombo.lalala",
+    id: 2,
+  },
 ];
 const Container = require("./Contenedor");
 const contenedor = new Container(arrayProducts);
 
 console.log(arrayProducts);
 
-//!
+//////////////////////////////////!
 
 //? Settings
 
@@ -22,7 +32,7 @@ app.set("json spaces", 2); //* JSON formatter
 
 //? Middlewares
 
-//! completedFields revisará si el input del formulario o la query recibe todos los parámetros solicitados // Método POST
+//? completedFields revisará si el input del formulario o la query recibe todos los parámetros solicitados // Método POST
 
 const completedFields = (req, res, next) => {
   const { title, price, thumbnail } = req.body;
@@ -31,7 +41,7 @@ const completedFields = (req, res, next) => {
     : res.status(300).send({ message: "Debe completar todos los campos" });
 };
 
-//!
+//////////////////////////////////!
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -66,17 +76,10 @@ app.post("/api/products", completedFields, async (req, res) => {
   data == null
     ? res.status(500).json({ message: ` [[${title}]] ya existe en el archivo` })
     : res.status(200).json(data);
-
 });
 
 app.put("/api/products/:id", (req, res) => {
-
-
-
   res.send("<h1 style='color:blue'>HOLA SERVIDOR</h1>");
-
-
-
 });
 
 app.delete("/api/products/:id", async (req, res) => {
