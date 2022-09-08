@@ -3,9 +3,9 @@ class Container {
     this.array = array;
   }
 
-  async save(object) {
-    // ? Recibe un objeto, lo guarda en el array y devuelve el id asignado
+  // ? Recibe un objeto, lo guarda en el array y devuelve el id asignado ////
 
+  async save(object) {
     try {
       // const dataToParse = await fs.promises.readFile(this.array, "utf-8");
       // const dataParsed = JSON.parse(dataToParse);
@@ -30,9 +30,36 @@ class Container {
     }
   }
 
-  async getById(idEntered) {
-    // ? Recibe un id y devuelve el objeto con ese id, o null si no está
+  // ? Recibe un id y modifica el objeto con ese id, por un nuevo objeto ingresado
 
+  async update(idEntered, object) {
+    try {
+      // * Se filtran los productos que no cumplen las condiciones (coincidir con el id proporcionado)
+      const leakedID = this.array.filter(({ id }) => id != idEntered);
+      // * Encuentra el producto con el id proporcionado
+      const idFound = this.array.find(({ id }) => id == idEntered);
+      // // * ¿El producto ya existe en el archivo?
+      // const productFound = this.array.find(
+      //   ({ title }) => title === object.title
+      // );
+
+      if (idFound) {
+        const idFound = { ...object, id: idEntered };
+        leakedID.push(idFound);
+        this.array = leakedID;
+        console.log(`Producto ${idEntered} modificado con éxito`, idFound);
+        return idFound;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error(`Se produjo un error en saveById:${error}`);
+    }
+  }
+
+  // ? Recibe un id y devuelve el objeto con ese id, o null si no está  /////////
+
+  async getById(idEntered) {
     try {
       // const dataToParse = await fs.promises.readFile(this.array, "utf-8");
       // const dataParsed = JSON.parse(dataToParse);
@@ -50,9 +77,9 @@ class Container {
     }
   }
 
-  async getAll() {
-    // ? Devuelve un array con los objetos presentes en el archivo
+  // ? Devuelve un array con los objetos presentes en el archivo /////////////////
 
+  async getAll() {
     try {
       // const dataToParse = await fs.promises.readFile(this.array, "utf-8");
       // const dataParsed = JSON.parse(dataToParse);
@@ -68,8 +95,9 @@ class Container {
     }
   }
 
+  // ? Elimina del archivo el objeto con el Id buscado /////////////////////////////
+
   async deleteById(idEntered) {
-    // ? Elimina del archivo el objeto con el Id buscado
     try {
       // const dataToParse = await fs.promises.readFile(this.array, "utf-8");
       // const dataParsed = JSON.parse(dataToParse);
@@ -85,7 +113,7 @@ class Container {
         // * Se actualiza el archivo
         // const updatedFile = JSON.stringify(leakedID, null, " ");
         // fs.promises.writeFile(this.array, updatedFile);
-        this.array = leakedID
+        this.array = leakedID;
         return idFound;
       } else {
         console.log(`No se ha encontrado el objeto con id: ${idEntered}`);
@@ -95,8 +123,9 @@ class Container {
     }
   }
 
+  // ? Elimina todos los objetos presentes en el archivo ///////////////////////////////
+
   async deleteAll() {
-    // ? Elimina todos los objetos presentes en el archivo
     try {
       console.log("Todos los objetos fueron eliminados");
       // * Borrado de todos los objetos (Se sobreescribe el archivo a un array vacío)
