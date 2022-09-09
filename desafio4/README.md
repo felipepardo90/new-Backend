@@ -391,22 +391,22 @@ app.use(express.static("public", options));
   - El **argumento root** especifica el directorio raiz desde el que se realiza el servicio de activos estáticos.
   - El **objeto options** opcional puede tener las siguientes propiedades: _dotfiles, etag, extensions, index, lastModified, maxAge, redirect, setHeaders_
 
-  #### Middleware de terceros
+#### Middleware de terceros
 
-  Podemos **instalar y utilizar middlewares de tereceros** para añadir funcionalidad a nuestra aplicación. El uso puede ser **a nivel de aplicación** o **a nivel de Router**. Por ejemplo, instalamos y usamos la función de middleware de análisis de cookies cookie-parser.
+Podemos **instalar y utilizar middlewares de tereceros** para añadir funcionalidad a nuestra aplicación. El uso puede ser **a nivel de aplicación** o **a nivel de Router**. Por ejemplo, instalamos y usamos la función de middleware de análisis de cookies cookie-parser.
 
-  ```
-  $ npm i cookie-parser
-  ```
+```
+$ npm i cookie-parser
+```
 
-  ```javascript
-  const express = require("express");
-  const app = express();
-  const cookieParser = require("cookie-parser");
+```javascript
+const express = require("express");
+const app = express();
+const cookieParser = require("cookie-parser");
 
-  // load the cookie-parsing middleware
-  app.use(cookieParses());
-  ```
+// load the cookie-parsing middleware
+app.use(cookieParses());
+```
 
 # Subir archivos: Multer
 
@@ -420,45 +420,45 @@ app.use(express.static("public", options));
   - En Express, un middleware procesa y transforma las peticiones entrantes en el servidor
   - **Multer** actúa como un ayudante al cargar archivos
 
-  ### Almacenamiento con Multer
+### Almacenamiento con Multer
 
-  Multer ofrece la opción de almacenar archivos en el disco. Definimos una ubicación de almacenamiento para nuestros archivos.
-  Configuramos multer con esas opciones.
+Multer ofrece la opción de almacenar archivos en el disco. Definimos una ubicación de almacenamiento para nuestros archivos.
+Configuramos multer con esas opciones.
 
-  ```javascript
-  // SET STORAGE
+```javascript
+// SET STORAGE
 
-  const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "uploads");
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.fieldName + "-" + Date.now());
-    },
-  });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldName + "-" + Date.now());
+  },
+});
 
-  const upload = multer({storage;storage})
-  ```
+const upload = multer({storage;storage})
+```
 
-  ### Subiendo un solo archivo
+### Subiendo un solo archivo
 
-  En el archivo index.html, definimos un atributo de acción que realiza una petición POST. Ahora necesitamos crear un punto final en la aplicación Express. Abrimos el archivo server.js y agregamos el siguiente código:
+En el archivo index.html, definimos un atributo de acción que realiza una petición POST. Ahora necesitamos crear un punto final en la aplicación Express. Abrimos el archivo server.js y agregamos el siguiente código:
 
-  ```javascript
-  app.post("/uploadFile", upload.single("myFile"), (req, res, next) => {
-    const file = req.file;
+```javascript
+app.post("/uploadFile", upload.single("myFile"), (req, res, next) => {
+  const file = req.file;
 
-    if (!file) {
-      const error = new Error("Please, upload a file");
-      error.httpStatusCode = 400;
-      return next(error);
-    } else {
-      res.send(file);
-    }
-  });
-  ```
+  if (!file) {
+    const error = new Error("Please, upload a file");
+    error.httpStatusCode = 400;
+    return next(error);
+  } else {
+    res.send(file);
+  }
+});
+```
 
-  ### Subiendo múltiples archivos
+### Subiendo múltiples archivos
 
 Cargar varios archivos con Multer es similar a cargar un solo archivo, pero con algunos cambios.
 
