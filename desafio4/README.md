@@ -205,7 +205,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 ```
 
-**Aclaración:** *{extended:true} precisa que el objeto req.body contendrá valores de cualquier tipo en lugar de solo cadenas.*
+**Aclaración:** _{extended:true} precisa que el objeto req.body contendrá valores de cualquier tipo en lugar de solo cadenas._
 **¡Sin esta línea, el servidor no sabrá cómo interpretar los objetos recibidos!**
 
 #### Más configuración extra
@@ -216,7 +216,262 @@ Para que nuestras respuestas de tipo json tengan un formato más prolijo y orden
 app.set("json spaces", 2);
 ```
 
-*Funciona como el JSON formatter, devuelve al cliente un archivo ordenado*
+_Funciona como el JSON formatter, devuelve al cliente un archivo ordenado_
 
 # Router y Multer
 
+## Ruteo en Express
+
+- La clase **Router** se usa para crear un nuevo objeto de enrutador, que es una instancia aislada de middleware y rutas. Se utiliza cuando se desea crear un nuevo objeto de enrutador para manejar solicitudes.
+- El **Router** de express nos permite crear múltiples _"mini aplicaciones"_ para que se pueda asignar un espacio de nombre al apu público, autenticación y otras rutas en sistemas de enrutamiento separados.
+
+```javascript
+const express = require("express");
+const { Router } = express;
+
+const app = express();
+const router = Router();
+
+router.get("/recurso", (req, res) => {
+  res.send("get ok");
+});
+
+router.post("/recurso", (req, res) => {
+  res.send("post ok");
+});
+
+app.use("/api", router);
+
+app.listen(8080);
+```
+
+## Introducción
+
+- Para el servicio de archivos estáticos (imágenes, archivos CSS y JS) se utiliza la función de middleware incorporada **express.static**
+- Esta función recibe como parámetro el nombre del directorio que contiene los archivos estáticos.
+- El siguiente código configura el servicio de imágenes, archivos CSS y JS en un directorio llamado _"PUBLIC"_
+
+```javascript
+app.use(express.static("public"));
+```
+
+A continuación podemos cargar los archivos que hay en el directorio **public:**
+
+_http://localhost:8080/images/kitten.jp_
+_http://localhost:8080/css/styles.css_
+
+**Nota:** _Express busca los archivos relativos al directorio estático, por lo que el nombre del directorio estático no forma parte del URL_
+
+## Múltiples directorios
+
+Para utilizar **varios directorios de archivos estáticos** se invoca la función de middleware express.static varias veces:
+
+```javascript
+app.use(express.static("public"));
+app.use(express.static("files"));
+```
+
+**Nota:** _Express busca los archivos en el orden en el que se definen los directorios estáticos con la función de middleware express.static_
+
+## Prefijo virtual
+
+Para crear un **prefijo virtual** (donde el path de acceso no existe realmente en el sistema de archivos) para los archivos servidos por express.static, debemos **especificar un path de acceso de montaje** para el directorio estático:
+
+```javascript
+app.use("/static", express.static("public"));
+```
+
+## Path absoluto
+
+El path que se proporciona a la función **express.static** es relativo al directorio desde donde inicia el proceso node.
+Por eso, si ejecutamos la aplicación Express desde cualquier otro directorio, es más seguro usar el path absoluto del directorio al que desea dar servicio:
+
+```javascript
+app.use("/static", express.static(__dirname + "public"));
+```
+
+# Capas middleware
+
+## Introducción
+
+Las funciones Middleware son aquellas que tienen acceso al objeto de solicitud (**req**), al objeto de respuesta (**res**) y a la siguiente función de middleware en el ciclo de solicitud/respuestas de la aplicación (**next**)
+
+- Se debe invocar a next() para pasar el control a la siguiente función de middleware. De lo contrario, la solicitud quedará colgada.
+
+## Tipos de middleware
+
+Una aplicación Express puede utilizar los siguientes tipos de middleware:
+
+- **Middleware a nivel de aplicación**
+- **Middleware a nivel del Router**
+- **Middleware de manejo de errores**
+- **Middleware incorporado**
+- **Middleware de terceros**
+
+#### Middleware de nivel de aplicación
+
+La función se ejecuta cada vez que la aplicación recibe una solicitud.
+
+```javascript
+const app = express();
+
+app.use((req, res, next) => {
+  console.log("Time", Date.now());
+  next();
+});
+```
+
+#### Middleware de nivel de aplicación
+
+Se pueden **agregar una o múltiples funciones** middlewares en los **procesos de atención de las rutas**, como se muestra a continuación:
+
+```javascript
+const miMiddleware1 = (req, res, next) => {
+  req.miAporte1 = "Dato aportado por el middleware 1";
+  next();
+};
+
+const miMiddleware2 = (req, res, next) => {
+  req.miAporte2 = "Dato aportado por el middleware 2";
+  next();
+};
+
+// Ruta GET con un middleware
+
+app.get("/miruta1", miMiddleware1, (req, res) => {
+  let miAporte1 = req.miAporte1;
+  res.send({ miAporte1 });
+});
+
+// Ruta GET con dos middleware
+
+app.get("/miruta1", miMiddleware1, miMiddleware2, (req, res) => {
+  let { miAporte1, miAporte2 } = req;
+  res.send({ miAporte1, miAporte2 });
+});
+```
+
+#### Middleware a nivel del Router
+
+El middleware de nivel de router funciona de la misma manera que el middleware de nivel de aplicación. Excepto que está enlazado a una instancia de express.Router()
+
+```javascript
+const app = express();
+const router = express.Router();
+
+//función middleware sin vía de acceso de montaje. El código es ejecutado por cada petición al router
+
+router.use((req, res, next) => {
+  console.log("Time: ", Date.now());
+  next();
+});
+```
+
+#### Middleware de manejo de errores
+
+Éstas funciones se definen de la misma forma que otras funciones de middleware, excepto que llevan cuatro argumentos en lugar de tres, específicamente con la firma _(err, req, res, next)_:
+
+```javascript
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+```
+
+#### Middleware incorporado
+
+La única función de middleware incorporado en Express es express.static. Esta función es responsanble del servicio de archivos estáticos:
+
+```javascript
+app.use(express.static("public", options));
+```
+
+- express.static(root, [options])
+
+  - El **argumento root** especifica el directorio raiz desde el que se realiza el servicio de activos estáticos.
+  - El **objeto options** opcional puede tener las siguientes propiedades: _dotfiles, etag, extensions, index, lastModified, maxAge, redirect, setHeaders_
+
+  #### Middleware de terceros
+
+  Podemos **instalar y utilizar middlewares de tereceros** para añadir funcionalidad a nuestra aplicación. El uso puede ser **a nivel de aplicación** o **a nivel de Router**. Por ejemplo, instalamos y usamos la función de middleware de análisis de cookies cookie-parser.
+
+  ```
+  $ npm i cookie-parser
+  ```
+
+  ```javascript
+  const express = require("express");
+  const app = express();
+  const cookieParser = require("cookie-parser");
+
+  // load the cookie-parsing middleware
+  app.use(cookieParses());
+  ```
+
+# Subir archivos: Multer
+
+## ¿Qué es Multer?
+
+- Cuando un cliente web sube un archivo a un servidor, generalmente lo envía a través de un formulario y se codifica como _multipart/form-data_
+- **Multer** hace que sea fácil manipular este _multipart/form-data_ cuando tus usuarios suben archivos.
+
+  - **Multer** es un middleware para Express
+  - un middleware es una pieza de software que conecta diferentes aplicaciones o componenetes de software
+  - En Express, un middleware procesa y transforma las peticiones entrantes en el servidor
+  - **Multer** actúa como un ayudante al cargar archivos
+
+  ### Almacenamiento con Multer
+
+  Multer ofrece la opción de almacenar archivos en el disco. Definimos una ubicación de almacenamiento para nuestros archivos.
+  Configuramos multer con esas opciones.
+
+  ```javascript
+  // SET STORAGE
+
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "uploads");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldName + "-" + Date.now());
+    },
+  });
+
+  const upload = multer({storage;storage})
+  ```
+
+  ### Subiendo un solo archivo
+
+  En el archivo index.html, definimos un atributo de acción que realiza una petición POST. Ahora necesitamos crear un punto final en la aplicación Express. Abrimos el archivo server.js y agregamos el siguiente código:
+
+  ```javascript
+  app.post("/uploadFile", upload.single("myFile"), (req, res, next) => {
+    const file = req.file;
+
+    if (!file) {
+      const error = new Error("Please, upload a file");
+      error.httpStatusCode = 400;
+      return next(error);
+    } else {
+      res.send(file);
+    }
+  });
+  ```
+
+  ### Subiendo múltiples archivos
+
+Cargar varios archivos con Multer es similar a cargar un solo archivo, pero con algunos cambios.
+
+```javascript
+app.post("/uploadMultiple", upload.array("myFiles", 12), (req, res, next) => {
+  const files = req.files;
+
+  if (!files) {
+    const error = new Error("Please choose files");
+    error.httpStatusCode = 400;
+    return next(error);
+  } else {
+    res.send(files);
+  }
+});
+```
