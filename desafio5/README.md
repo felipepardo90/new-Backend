@@ -208,7 +208,7 @@ app.set("view engine", "ejs");
 
 #### Ejemplo
 
-```ejs
+```html
 <% const estilo = "color:crimson"; %>
 <% if (message) { %>
 <h2 style=<%=estilo%>><%= message.name %></h2>
