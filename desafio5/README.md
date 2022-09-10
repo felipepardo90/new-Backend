@@ -124,15 +124,15 @@ npm i express-handlebars
 ### Configuración
 
 ```javascript
-
 // Cargo el módulo handlebars
-const handlebars = require("express-handlebars")
+const handlebars = require("express-handlebars");
 
 // establecemos la configuración de HBS
 
 app.engine(
   "hbs", // Nombre referencia a la plantilla (se usa luego en set)
-  handlebars({ // Función de configuración HBS
+  handlebars({
+    // Función de configuración HBS
     extname: ".hbs", // Extensión a utilizar (en lugar de HBS por defecto)
     defaultLayout: "index.hbs", // Plantilla principal
     layoutsDir: _dirname + "/views/layouts", // Ruta a la plantilla principal
@@ -151,5 +151,84 @@ app.set("views", "./views");
 app.use(express.static("public"));
 ```
 
-
 # CLASE 10 - Pug & Ejs
+
+### Instalar PUG
+
+```
+$ npm i pug
+```
+
+- Se creará un directorio en la carpeta raiz de nuestro proyecto, para guardar las plantillas que se utilizarán en la aplicación. (views)
+- Necesitamos indicarle a express que _views_ será nuestro directorio de plantillas. Y también indicar cuál será el motor de plantillas que se usará.
+
+```javascript
+app.set("views", "./views");
+
+app.set("view engine", "pug");
+```
+
+- La función _"render"_ del objeto res(response) recibe dos parámetros: el primero es el **nombre** de la plantilla a mostrar y el segundo un objeto con los valores a reemplazar.
+
+```javascript
+res.render(view: string, options?: Object)
+```
+
+#### USANDO PUG JS EN EXPRESS
+
+```javascript
+app.get("/hello", (req, res) => {
+  res.render("hello.pug", { mensaje: "Usando Pug JS en Express" });
+});
+```
+
+### Instalar EJS
+
+```
+$ npm i ejs
+```
+
+## Configuración
+
+- Configuramos EJS como el motor de visualización de nuestra aplicación Express usando...
+
+```javascript
+app.set("view engine", "ejs");
+```
+
+- Creamos una carpeta de vistas; **views**
+- EJS enviará una vista al usuario usando _res.render()_. Es importante tener en cuenta que res.render() buscará la vista en una carpeta **views**
+- Por ejemplo, si definimos _pages/index_ dentro de views, **_res.render('pages/index')_** buscará en views/pages/index.
+
+## Sintaxis básica (etiquetas)
+
+- `<%= Incrusta en la plantilla el valor tal cual está `
+- `<%- Incrusta en la plantilla el valor renderizado como HTML `
+- `<% 'Scriptlet': Admite instrucciones en JS para declaración de variables y control de flujo `
+
+#### Ejemplo
+
+```ejs
+<% const estilo = "color:crimson"; %>
+<% if (message) { %>
+<h2 style=<%=estilo%>><%= message.name %></h2>
+<% } %>
+```
+
+## Creando plantillas PARCIALES
+
++ Al igual que muchas aplicaciones que creamos, hay mucho **código que se reutiliza.** En EJS llamamos a estos códigos **parciales**.
++ En el ejemplo que mostramos a continuación, los definimos dentro de la **carpeta 'partials'**
+
+### Añadiendo los partials de EJS a Views
+
+Ahora que tenemos nuestros parciales deifinidos, lo que debemos hacer es **incluirlos en nuestras vistas.**
+
+- Utilizamos ```<%- include('RELATIVE/PATH/TO/FILE') %>``` para integrar un parcial de EJS en otro archivo
+- El guión ```<%-``` en lugar de solo ```<%``` es para indicar a EJS que **renderice HTML sin formato.**
+- La ruta al parcial es **relativa** al archivo actual.
+
+
+## Pasando datos a VIEWS
+
+
