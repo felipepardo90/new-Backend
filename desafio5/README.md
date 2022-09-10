@@ -209,26 +209,69 @@ app.set("view engine", "ejs");
 #### Ejemplo
 
 ```html
-<% const estilo = "color:crimson"; %>
-<% if (message) { %>
-<h2 style=<%=estilo%>><%= message.name %></h2>
+<% const estilo = "color:crimson"; %> <% if (message) { %>
+<h2 style="<%" ="estilo%">><%= message.name %></h2>
 <% } %>
 ```
 
 ## Creando plantillas PARCIALES
 
-+ Al igual que muchas aplicaciones que creamos, hay mucho **código que se reutiliza.** En EJS llamamos a estos códigos **parciales**.
-+ En el ejemplo que mostramos a continuación, los definimos dentro de la **carpeta 'partials'**
+- Al igual que muchas aplicaciones que creamos, hay mucho **código que se reutiliza.** En EJS llamamos a estos códigos **parciales**.
+- En el ejemplo que mostramos a continuación, los definimos dentro de la **carpeta 'partials'**
 
 ### Añadiendo los partials de EJS a Views
 
 Ahora que tenemos nuestros parciales deifinidos, lo que debemos hacer es **incluirlos en nuestras vistas.**
 
-- Utilizamos ```<%- include('RELATIVE/PATH/TO/FILE') %>``` para integrar un parcial de EJS en otro archivo
-- El guión ```<%-``` en lugar de solo ```<%``` es para indicar a EJS que **renderice HTML sin formato.**
+- Utilizamos `<%- include('RELATIVE/PATH/TO/FILE') %>` para integrar un parcial de EJS en otro archivo
+- El guión `<%-` en lugar de solo `<%` es para indicar a EJS que **renderice HTML sin formato.**
 - La ruta al parcial es **relativa** al archivo actual.
-
 
 ## Pasando datos a VIEWS
 
+```javascript
+app.get("/", (req, res) => {
+  let mascots = [
+    { name: "Sammy", organization: "DigitalOcean", birth_year: 2012 },
+  ];
 
+  let tagline =
+    "No programming concept is complete without a cute animal mascot.";
+
+  res.render("pages/index", {
+    mascots: mascots,
+    tagline: tagline,
+  });
+});
+```
+
+### Renderizar una variable única en EJS
+
++ Para utilizar una de las variables pasada, usamos directamente el nombre de la misma. En este caso: <%= tagline %>
+
+```html
+<h2>Variable</h2>
+<p><%= tagline %></p>
+```
+### Iterar sobre datos contenidos en una variable
+
++ Aquí utilizamos código JS. Por ejemplo, podemos usar *.forEach():*
+
+```html
+<ul>
+<% mascots.forEach(mascot=>{)%>
+<li>
+  <strong><%= mascot.name %></strong>
+  representing <%= mascot.organization %>, born <%= mascot.birth_year %>
+</li>
+<% }) %>
+</ul>
+```
+### Pasando datos a un parcial en EJS
+
+Si deseamos referenciar una variable en un parcial que puede no definirse siempre, y darle un valor predeterminado, podemos hacerlo de esta forma:
+
+```html
+<em>Variant: <%= typeof variant != 'undefined' ? variant : 'default' %></em>
+```
+*El código EJS renderizará el valor de **variant** si está definido y de **default** si no lo está*
