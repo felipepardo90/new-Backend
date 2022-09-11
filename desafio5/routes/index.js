@@ -4,11 +4,13 @@ const router = Router();
 const productsRoute = require("./products")
 
 
+router.use("/", (req, res)=>{
+    res.render("index")
+  })
 
+//? Route: PRODUCTS
 
-//? Route
-
-router.use("/products", productsRoute)
+router.use("/api/products", productsRoute)
 
 
 module.exports = router
