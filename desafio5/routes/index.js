@@ -4,9 +4,11 @@ const router = Router();
 const productsRoute = require("./products")
 
 
-router.use("/", (req, res)=>{
-    res.render("index")
-  })
+
+//? MAIN FORM
+// router.use("/", (req, res)=>{
+//     res.render("index")
+//   })
 
 //? Route: PRODUCTS
 
