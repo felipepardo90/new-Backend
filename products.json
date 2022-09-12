@@ -28,5 +28,11 @@
   "price": 84768,
   "thumbnail": "acordeon.lalala",
   "id": 5
+ },
+ {
+  "title": "producto prueba",
+  "price": "123132113",
+  "thumbnail": "producto.prueba",
+  "id": 6
  }
 ]
