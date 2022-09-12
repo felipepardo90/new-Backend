@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const indexAPI = require("./routes/index");
+const indexAPI= require("./routes/index");
 
 //? SETTINGS ///////////////////////////////////////////
 
@@ -25,6 +25,9 @@ app.set('view engine', 'pug')
 //? ROUTES ///////////////////////////////////////////
 
 app.use("/", indexAPI);
+app.use("/", (req, res)=>{
+      res.render("index")
+    })
 
 //? STARTING SERVER ///////////////////////////////////
 
