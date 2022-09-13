@@ -22,7 +22,7 @@ const completedFields = (req, res, next) => {
 
 router.get("/", async (req, res) => {
     const data = await contenedor.getAll();
-    res.status(200).json(data);
+    res.status(200).render("products", {products: data});
     
   });
   
@@ -44,7 +44,7 @@ router.get("/", async (req, res) => {
     const data = await contenedor.save({ title, price, thumbnail });
     data == null
       ? res.status(500).json({ message: ` [[${title}]] ya existe en el archivo` })
-      : res.status(200).json(data);
+      : res.status(200).render("products");
   });
   
   //* RECIBE Y ACTUALIZA UN PRODUCTO SEGÚN SU ID //////////////////////////////////////////
