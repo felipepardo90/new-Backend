@@ -2,37 +2,31 @@
  {
   "title": "Guitarra Alpujarra",
   "price": 99989,
-  "thumbnail": "guitarra.lalala",
+  "thumbnail": "https://http2.mlstatic.com/D_NQ_NP_664855-MLA27358402919_052018-O.jpg",
   "id": 1
  },
  {
   "title": "Bombo legüero",
   "price": 62999,
-  "thumbnail": "bombo.lalala",
+  "thumbnail": "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/661/931/products/2211-d3d33073fc32fca2f416203260081526-1024-1024.jpg",
   "id": 2
  },
  {
   "title": "Violín",
   "price": 74500,
-  "thumbnail": "violin.lalala",
+  "thumbnail": "https://solomusica.com.ar/sm2020/6606-large_default/violin-yamaha-v5sa-44.jpg",
   "id": 3
  },
  {
   "title": "Bajo",
   "price": 79950,
-  "thumbnail": "bajo.lalala",
+  "thumbnail": "https://y6v8e8y4.rocketcdn.me/wp-content/uploads/2022/08/1500x1500_template-wh-1-1.jpg",
   "id": 4
  },
  {
   "title": "Acordeón",
   "price": 84768,
-  "thumbnail": "acordeon.lalala",
+  "thumbnail": "https://ar.xprostore.com/image/cache/data/imagenesweb/a5723s-650x650w.jpg",
   "id": 5
- },
- {
-  "title": "producto prueba",
-  "price": "123132113",
-  "thumbnail": "producto.prueba",
-  "id": 6
  }
 ]
