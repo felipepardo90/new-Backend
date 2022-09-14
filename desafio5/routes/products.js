@@ -44,7 +44,7 @@ router.get("/", async (req, res) => {
     const data = await contenedor.save({ title, price, thumbnail });
     data == null
       ? res.status(500).json({ message: ` [[${title}]] ya existe en el archivo` })
-      : res.status(200).render("products");
+      : res.status(200).redirect("products");
   });
   
   //* RECIBE Y ACTUALIZA UN PRODUCTO SEGÚN SU ID //////////////////////////////////////////
