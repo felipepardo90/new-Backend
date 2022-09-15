@@ -18,7 +18,7 @@ app.use("/", express.static(__dirname + "/public"));
 
 //? VIEW ENGINES /////////////////////////////////////
 
-//!app.set('view engine', 'pug')
+// !app.set('view engine', 'pug')
 ! app.set('view engine', 'ejs')
 //! app.set('view engine', 'hbs')
 
