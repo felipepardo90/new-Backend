@@ -16,11 +16,24 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use("/", express.static(__dirname + "/public"));
 
+//? CONFIGURACIÓN EXTRA HBS ///////////////////////////
+
+const { engine } = require("express-handlebars");
+app.engine(
+  "hbs",
+  engine({
+    extname: ".hbs",
+    defaultLayout: (__dirname + "/views/layouts/layout.hbs"),
+    layoutsDir: (__dirname + "/views/layout"),
+    partialsDir: (__dirname + "/views/partials"),
+  })
+);
+
 //? VIEW ENGINES /////////////////////////////////////
 
 // !app.set('view engine', 'pug')
-! app.set('view engine', 'ejs')
-//! app.set('view engine', 'hbs')
+// ! app.set('view engine', 'ejs')
+! app.set('view engine', 'hbs')
 
 //? ROUTES ///////////////////////////////////////////
 
