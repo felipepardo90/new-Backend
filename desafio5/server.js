@@ -14,12 +14,12 @@ app.set('views', __dirname + '/views')
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
-// app.use("/", express.static(__dirname + "/public"));
+app.use("/", express.static(__dirname + "/public"));
 
 //? VIEW ENGINES /////////////////////////////////////
 
-app.set('view engine', 'pug')
-//! app.set('view engine', 'ejs')
+//!app.set('view engine', 'pug')
+! app.set('view engine', 'ejs')
 //! app.set('view engine', 'hbs')
 
 //? ROUTES ///////////////////////////////////////////
