@@ -25,7 +25,7 @@ app.engine(
     extname: ".hbs",
     defaultLayout: (__dirname + "/views/layouts/layout.hbs"),
     layoutsDir: (__dirname + "/views/layout"),
-    partialsDir: (__dirname + "/views/partials"),
+    partialsDir: (__dirname + "/views/includes"),
   })
 );
 
