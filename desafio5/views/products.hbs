@@ -6,7 +6,7 @@
 
     {{#each products}}
 <div class="card" style="width: 18rem; margin: 10px">
-    <img src={{this.thumbnail}} class="card-img-top" alt={{this.title}} />
+    <img class="card-img-top" alt="{{this.title}}" src="{{this.thumbnail}}"/>
     <div class="card-body">
       <h5 class="card-title">{{this.title}}</h5>
       <p class="card-text">$ {{this.price}}</p>
