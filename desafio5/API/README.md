@@ -3,6 +3,10 @@
 Se va a manejar el módulo fs para poder reescribir el archivos _productos.json_ en la carpeta raiz del repositorio.
 Los métodos que se van a utilizar se van a encargar de las validaciones y la reescritura de este archivo.
 
+```javascript
+const fs = require("fs")
+```
+
 ## Métodos
 
 Todos los métodos estarán incluidos en la clase Container, cuyo constructor recibe como parámetro el archivo json de productos.
