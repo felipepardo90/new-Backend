@@ -4,7 +4,7 @@ Se va a manejar el módulo fs para poder reescribir el archivos _productos.json_
 Los métodos que se van a utilizar se van a encargar de las validaciones y la reescritura de este archivo.
 
 ```javascript
-const fs = require("fs")
+const fs = require("fsgi")
 ```
 
 ## Métodos
