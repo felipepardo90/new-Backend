@@ -3,7 +3,7 @@ const express = require("express");
 const { Router } = express;
 const router = Router();
 //! CONTENEDOR /////////////////////////////////
-const Container = require("../API/Container");
+const Container = require("../models/Container");
 const contenedor = new Container("products.json");
 //!  ///////////////////////////////////////////
 

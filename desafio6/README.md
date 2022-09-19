@@ -200,7 +200,7 @@ socket.on("mi mensaje", data =>{
 })
 ```
 
-## Recepciónd e datos del cliente (servidor)
+## Recepción de datos del cliente (servidor)
 
 Para recibirlo en el cliente sería de la siguiente forma:
 
