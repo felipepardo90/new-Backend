@@ -1,13 +1,17 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const indexAPI= require("./routes/index");
+
+//? ROUTES /////////////////////////////////////////////
+
+const indexRoute = require("./routes/index.routes");
+const productsRoute = require("./routes/products.routes");
 
 //? SETTINGS ///////////////////////////////////////////
 
 app.set("port", 8080); //* Configuración puerto
 app.set("json spaces", 2); //* JSON formatter
-app.set('views', __dirname + '/views')
+app.set("views", __dirname + "/views");
 
 //? MIDDLEWARES ///////////////////////////////////////
 
@@ -15,6 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use("/", express.static(__dirname + "/public"));
+app.use("/", indexRoute);
+app.use("/api/products", productsRoute);
 
 //? CONFIGURACIÓN EXTRA HBS ///////////////////////////
 
@@ -23,22 +29,15 @@ app.engine(
   "hbs",
   engine({
     extname: ".hbs",
-    defaultLayout: (__dirname + "/views/layouts/layout.hbs"),
-    layoutsDir: (__dirname + "/views/layout"),
-    partialsDir: (__dirname + "/views/includes"),
+    defaultLayout: __dirname + "/views/layouts/layout.hbs",
+    layoutsDir: __dirname + "/views/layout",
+    partialsDir: __dirname + "/views/includes",
   })
 );
 
 //? VIEW ENGINES /////////////////////////////////////
 
-! app.set('view engine', 'hbs')
-
-//? ROUTES ///////////////////////////////////////////
-
-app.use("/", indexAPI);
-app.use("/", (req, res)=>{
-      res.render("index")
-    })
+app.set("view engine", "hbs");
 
 //? STARTING SERVER ///////////////////////////////////
 
