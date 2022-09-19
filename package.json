@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "nodemon desafio5/server.js"
+    "start": "node desafio5/server.js",
+    "dev" : "nodemon desafio5/server.js"
   },
   "dependencies": {
     "ejs": "^3.1.8",
@@ -11,5 +12,20 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
-  }
+  },
+  "name": "new-backend",
+  "description": "+ Repaso de Javascript básico\r + NodeJS\r + Sincronía y asincronía\r + Manejo de archivos con file system (fs)\r + Express",
+  "version": "1.0.0",
+  "main": "pruebas.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felipepardo90/new-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felipepardo90/new-Backend/issues"
+  },
+  "homepage": "https://github.com/felipepardo90/new-Backend#readme"
 }
