@@ -1,4 +1,5 @@
-const express = require("express");
+const express = require("express"),
+  path = require("path");
 const app = express();
 const morgan = require("morgan");
 
@@ -17,8 +18,7 @@ app.set("views", __dirname + "/views");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
-app.use("/", express.static(__dirname + "./public")); //FIXME arreglar directorio - ruta
-console.log(__dirname, "??????")
+app.use("/", express.static(path.join(__dirname, "../public"))); //? STATIC FILES
 app.use("/", indexRoute); //
 
 //? CONFIGURACIÓN EXTRA HBS ///////////////////////////
@@ -29,7 +29,7 @@ app.engine(
   engine({
     extname: ".hbs",
     defaultLayout: __dirname + "/views/layouts/layout.hbs",
-    layoutsDir: __dirname + "/views/layout",
+    layoutsDir: __dirname + "/views/layouts",
     partialsDir: __dirname + "/views/includes",
   })
 );
@@ -48,4 +48,21 @@ const server = app.listen(app.get("port"), () => {
 
 server.on("error", (error) => {
   console.log(`Error !!!: ${error}`);
+});
+
+//? WEBSOCKETS //////////////////////////////////////////////
+
+const SocketIO = require("socket.io");
+const io = SocketIO(server);
+
+io.on("connection", (socket) => {
+  console.log(`New Connection: ${socket.id}`);
+
+  socket.on("chat:message", (data) => {
+    io.sockets.emit("chat:message", data);
+  });
+
+  socket.on("chat:typing", (data) => {
+    socket.broadcast.emit("chat:typing", data)
+  });
 });
