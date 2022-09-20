@@ -4,8 +4,7 @@ const morgan = require("morgan");
 
 //? ROUTES /////////////////////////////////////////////
 
-// const indexRoute = require("./routes/index.routes"); //FIXME arreglameee
-const productsRoute = require("./routes/products.routes");
+const indexRoute = require("./routes/index.routes");
 
 //? SETTINGS ///////////////////////////////////////////
 
@@ -18,9 +17,9 @@ app.set("views", __dirname + "/views");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
-app.use("/", express.static(__dirname + "/public"));
-// app.use("/", indexRoute); //FIXME arreglameee
-app.use("/api/products", productsRoute);
+app.use("/", express.static(__dirname + "./public")); //FIXME arreglar directorio - ruta
+console.log(__dirname, "??????")
+app.use("/", indexRoute); //
 
 //? CONFIGURACIÓN EXTRA HBS ///////////////////////////
 
