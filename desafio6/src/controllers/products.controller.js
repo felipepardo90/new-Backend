@@ -4,21 +4,10 @@ const contenedor = new Container("products.json");
 //! CONTENEDOR /////////////////////////////////
 const controller = {};
 
-//? completedFields revisará si el input del formulario o la query recibe todos los parámetros solicitados // Método POST
-
-const completedFields = (req, res, next) => {
-  //FIXME arreglame pls
-  const { title, price, thumbnail } = req.body;
-  title && price && thumbnail
-    ? next()
-    : res.status(300).send({ message: "Debe completar todos los campos" });
-};
-
 controller.getAll = async (req, res) => {
   //* DEVUELVE TODOS LOS PRODUCTOS
   const data = await contenedor.getAll();
-  // res.status(200).render("products", { products: data });
-  res.json(data);
+  res.status(200).render("products", { products: data });
 };
 
 controller.getById = async (req, res) => {
@@ -31,29 +20,25 @@ controller.getById = async (req, res) => {
     : res.status(404).json({ error: "Producto no encontrado" });
 };
 
-(controller.post = completedFields), //TODO arreglar esto
-  async (req, res) => {
-    //* RECIBE Y AGREGA UN PRODUCTO, Y LO DEVUELVE CON SU ID ASIGNADO
-    const { title, price, thumbnail } = req.body;
-    const data = await contenedor.save({ title, price, thumbnail });
-    data == null
-      ? res
-          .status(500)
-          .json({ message: ` [[${title}]] ya existe en el archivo` })
-      : res.status(200).redirect("index");
-  };
+controller.post = async (req, res) => {
+  //* RECIBE Y AGREGA UN PRODUCTO, Y LO DEVUELVE CON SU ID ASIGNADO
+  const { title, price, thumbnail } = req.body;
+  const data = await contenedor.save({ title, price, thumbnail });
+  data == null
+    ? res.status(500).json({ message: ` [[${title}]] ya existe en el archivo` })
+    : res.status(200).render("index");
+};
 
-(controller.put = completedFields), //TODO arreglar esto
-  async (req, res) => {
-    //* RECIBE Y ACTUALIZA UN PRODUCTO SEGÚN SU ID
-    const { id } = req.params;
-    const newObject = req.body;
-    const data = await contenedor.update(+id, newObject);
+controller.put = async (req, res) => {
+  //* RECIBE Y ACTUALIZA UN PRODUCTO SEGÚN SU ID
+  const { id } = req.params;
+  const newObject = req.body;
+  const data = await contenedor.update(+id, newObject);
 
-    data != null
-      ? res.status(200).json({ message: `Producto ${id} modificado con éxito` })
-      : res.status(404).json({ error: "Producto no encontrado" });
-  };
+  data != null
+    ? res.status(200).json({ message: `Producto ${id} modificado con éxito` })
+    : res.status(404).json({ error: "Producto no encontrado" });
+};
 
 controller.delete = async (req, res) => {
   //* ELIMINA UN PRODUCTO SEGÚN SU ID

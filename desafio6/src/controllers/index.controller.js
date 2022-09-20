@@ -1,6 +1,6 @@
 const controller = {};
 
-controller.index = (req, res) => { //FIXME Arreglame porfa
+controller.index = (req, res) => {
   res.status(200).render("index");
 };
 
