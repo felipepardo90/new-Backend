@@ -9,6 +9,7 @@ let output = document.getElementById("output");
 let actions = document.getElementById("actions");
 
 btn.addEventListener("click", () => {
+  //TODO Arreglar CHAT
   socket.emit("chat:message", {
     username: username.value,
     message: message.value,
@@ -20,9 +21,12 @@ message.addEventListener("keypress", () => {
 });
 
 socket.on("chat:message", (data) => {
-  actions.innerHTML = "";
   output.innerHTML += `<p>
-    <strong>${data.username}</strong>: ${data.message}
+    <strong class="message-user">${
+      data.username
+    } <span class="message-date">[ ${new Date().toLocaleString()} ]</span></strong>: <span class="message-txt">${
+    data.message
+  }</span>
     </p>`;
 });
 
