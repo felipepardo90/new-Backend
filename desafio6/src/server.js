@@ -35,7 +35,6 @@ app.engine(
   })
 );
 
-
 //! STARTING SERVER
 
 const server = app.listen(app.get("port"), () => {
@@ -52,16 +51,19 @@ server.on("error", (error) => {
 
 const SocketIO = require("socket.io");
 const io = SocketIO(server);
-const Messages = [] //TODO Arreglar CHAT
+const Messages = [
+  { username: "Felipe", message: "HOla" },
+  { username: "Miguel", message: "HOlaa Felipe" },
+  { username: "Fabiola", message: "Hola Amoor" },
+]; //TODO Arreglar CHAT
 
 io.on("connection", (socket) => {
   console.log(`New Connection: ${socket.id}`);
-  socket.emit("messages", Messages)
+  socket.emit("all:messages", Messages);//todo evento allmessages nuevo : debe implementarse?
 
   socket.on("chat:message", (data) => {
-    io.sockets.emit("chat:message", data);//! Enviar nuevos mensajes
-    //TODO Arreglar CHAT
-    Messages.push(data)
+    Messages.push(data);//FIXME me hago cargo de esto?
+    io.sockets.emit("chat:message", data); //! Enviar nuevos mensajes
   });
 
   socket.on("chat:typing", (data) => {
