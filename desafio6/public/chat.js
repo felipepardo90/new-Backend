@@ -1,5 +1,3 @@
-const socket = io();
-
 //!  DOM ELEMENTS
 
 let message = document.getElementById("message");
@@ -9,37 +7,20 @@ let output = document.getElementById("output");
 let actions = document.getElementById("actions");
 
 btn.addEventListener("click", () => {
-  //TODO Arreglar CHAT
+  
   socket.emit("chat:message", {
     username: username.value,
     message: message.value,
   });
+  message.value = " ";
+  message.focus();
 });
 
-function render(data) {
- 
-  const html = data
-    .map((msg) => {
-      `<p>
-  <strong class="message-user">${
-    msg.username
-  } <span class="message-date">[ ${new Date().toLocaleString()} ]</span></strong>: <span class="message-txt">${
-        msg.message
-      }</span>
-  </p>`;
-    })
-    .join(" ");
-    
-  output.innerHTML = html;
-} //ToDO Function debe implementarse???
 
 message.addEventListener("keypress", () => {
   socket.emit("chat:typing", username.value);
 });
 
-socket.on("all:messages", (data) => {
-  render(data);
-}); //TODO Traer todo el array de mensajes
 
 socket.on("chat:message", (data) => {
   actions.innerHTML = " ";
