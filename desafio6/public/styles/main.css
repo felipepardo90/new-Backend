@@ -123,6 +123,12 @@ body {
   padding: 0.8em 0;
   border: none;
   border-radius: 0.5em;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+.form-container .form-submit:hover {
+  background-color: blue;
+  color: yellow;
 }
 
 @media (max-width: 425px) {

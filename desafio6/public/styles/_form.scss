@@ -90,6 +90,12 @@
       padding: 0.8em 0;
       border: none;
       border-radius: 0.5em;
+      cursor: pointer;
+      transition: .3s all;
+      &:hover{
+        background-color: blue;
+        color: yellow;
+      }
     }
   }
 }
