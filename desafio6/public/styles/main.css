@@ -195,4 +195,15 @@ button {
   padding: 12px 0;
   width: 100%;
   border-radius: 0 0 2px 2px;
+}
+
+.section-products {
+  width: 90%;
+  background-color: yellow;
+  margin: 25px auto;
+  text-align: center;
+}
+
+#output-products {
+  background: blue;
 }/*# sourceMappingURL=main.css.map */
