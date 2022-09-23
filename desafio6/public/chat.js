@@ -14,7 +14,7 @@ btn.addEventListener("click", () => {
     message: message.value,
   });
   message.value = " ";
-  return false
+  return false;
 });
 
 //! El input message escucha al evento keypress(escribiendo) para crear el evento chat:typing
@@ -27,15 +27,18 @@ message.addEventListener("keypress", () => {
 
 socket.on("chat:messages", (data) => {
   actions.innerHTML = " ";
-  output.innerHTML = data.map(user=> 
-    `<p>
+  output.innerHTML = data
+    .map(
+      (user) =>
+        `<p>
     <strong class="message-user">${
       user.username
     } <span class="message-date">[ ${new Date().toLocaleString()} ]</span></strong>: <span class="message-txt">${
-      user.message
-    }</span>
+          user.message
+        }</span>
     </p>`
-    ).join(" ")
+    )
+    .join(" ");
 });
 
 //! "Está escribiendo..."

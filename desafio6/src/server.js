@@ -22,34 +22,28 @@ const contenedor = new Container("products.json");
 //! CONTENEDOR PRODUCTOS
 const Messages = []; //TODO Cambiar a archivo json
 
-console.log(Messages)
-
-
 io.on("connection", async (socket) => {
-
   //! Nueva conexión
   console.log(`New Connection: ${socket.id}`);
 
   //! PRODUCTOS
 
-  const products = await contenedor.getAll()
-  io.sockets.emit("get-products", products);
+  const products = await contenedor.getAll();
+  socket.emit("product:all", products);
 
-  socket.on("new-product", async (object) => {
-    //! Guardar producto
+  //! Guardar producto
+  socket.on("product:new", async (object) => {
     const data = await contenedor.save(object);
     data === null
-      ? socket.emit("new-product", object)
-      : socket.emit("new-product", data);
+      ? socket.emit("product:submit", { product: object, status: true })
+      : socket.emit("product:submit", { product: object, status: false });
+    io.sockets.emit("product:all", products);
   });
-
-  
 
   //! CHAT
 
   //! El evento chat:messages iniciará enviando el array existente al cliente
-  socket.emit("chat:messages", Messages); 
-
+  socket.emit("chat:messages", Messages);
 
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
@@ -57,8 +51,8 @@ io.on("connection", async (socket) => {
     Messages.push(data);
     io.sockets.emit("chat:messages", Messages);
   });
-  
-//! Se escucha el evento chat:typing y se emite un mensaje a todos los sockets conectados, excepto al que "está escribiendo..." con el método broadcast
+
+  //! Se escucha el evento chat:typing y se emite un mensaje a todos los sockets conectados, excepto al que "está escribiendo..." con el método broadcast
 
   socket.on("chat:typing", (data) => {
     socket.broadcast.emit("chat:typing", data);
