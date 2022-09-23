@@ -12,6 +12,7 @@ btn.addEventListener("click", () => {
   socket.emit("chat:message", {
     username: username.value,
     message: message.value,
+    date: new Date().toLocaleString()
   });
   message.value = " ";
   return false;
@@ -33,12 +34,13 @@ socket.on("chat:messages", (data) => {
         `<p>
     <strong class="message-user">${
       user.username
-    } <span class="message-date">[ ${new Date().toLocaleString()} ]</span></strong>: <span class="message-txt">${
+    } <span class="message-date">[ ${user.date} ]</span></strong>: <span class="message-txt">${
           user.message
         }</span>
     </p>`
     )
     .join(" ");
+    return false
 });
 
 //! "Está escribiendo..."
