@@ -14,7 +14,8 @@ btn.addEventListener("click", () => {
     message: message.value,
     date: new Date().toLocaleString()
   });
-  message.value = " ";
+  message.value = "";
+  message.focus()
   return false;
 });
 
