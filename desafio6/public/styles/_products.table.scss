@@ -1,16 +1,17 @@
 .section-products {
   width: 90%;
   background-color: yellow;
+  font-family: "Poppins", sans-serif;
   margin: 25px auto;
   text-align: center;
 }
 
-#output-products {
-  background: blue;
-  color: yellow;
+.products {
+  background-color: yellowgreen;
+  color: white;
   overflow-x: auto;
   max-width: 1000px;
-  margin: 40px auto;
+  margin: 40px 20px;
   height: 200px;
   h2{
     text-align: center;
@@ -29,7 +30,7 @@ table thead {
   font-weight: 700;
   td {
     background-color: green;
-    color: black;
+    color: white;
     border: none;
     padding: 6px 0;
   }
@@ -55,4 +56,6 @@ table tbody img {
   width: 120px;
   height: 120px;
   object-fit: cover;
+  box-shadow: 1px 2px 4px black;
+  border-radius: 50%;
 }
