@@ -5,20 +5,17 @@ const title = document.querySelector("#title");
 const price = document.querySelector("#price");
 const thumbnail = document.querySelector("#thumbnail");
 
-
-async function render(products){
+async function render(products) {
   //? renderizar handlebars
-  const response = await fetch("./form.products.hbs")
-  const template = await response.text()
+  const response = await fetch("./form.products.hbs");
+  const template = await response.text();
 
-  products.forEach(product=>{
-    const HBStemplate = Handlebars.compile(template)
-    const html = HBStemplate(product)
-    document.querySelector("#output-products").innerHTML += html
-  })
+  products.forEach((product) => {
+    const HBStemplate = Handlebars.compile(template);
+    const html = HBStemplate(product);
+    document.querySelector("#output-products").innerHTML += html;
+  });
 }
-
-
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -33,9 +30,16 @@ form.addEventListener("submit", (e) => {
   price.value = "";
   thumbnail.value = "";
 
-  title.focus();
 });
 
-socket.on("new-product", (data) => {
-  alert(`Ya existe el producto ${data} en el sistema`);
+socket.on("get-products", (products) => { //! Obtendrá todos los productos
+  // console.log(products)
+  render(products);
+});
+
+
+socket.on("new-product", (data) => { //! Informará mediante un alert cuando se agregue un producto nuevo, o si ya existe
+  data != null
+    ? alert(`Ya existe el producto ${data.title} en el sistema`)
+    : alert(`Se ha agregado el producto ${data.title}`);
 });
