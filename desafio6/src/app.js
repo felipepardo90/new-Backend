@@ -29,10 +29,10 @@ app.engine(
   "hbs",
   engine({
     extname: ".hbs",
-    defaultLayout: __dirname + "/views/layouts/layout.hbs",
-    layoutsDir: __dirname + "/views/layouts",
-    partialsDir: __dirname + "/views/includes",
+    defaultLayout: path.join(__dirname, "/views/layout/main.hbs"),
+    layoutsDir: path.join(__dirname, "./views/layout"),
+    partialsDir: path.join(__dirname, "/views/partials"),
   })
 );
 
-module.exports = app
+module.exports = app;
