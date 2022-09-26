@@ -27,7 +27,7 @@ message.addEventListener("keypress", () => {
 
 //! Luego de enviar mensaje por el chat, se limpiará el actions (muestra el evento chat:typing) y se renderizará el chat, obteniendo por data un Array de mensajes con el evento chat:messages
 
-socket.on("chat:messages", (data) => {
+socket.on("chat:history", (data) => {
   actions.innerHTML = " ";
   output.innerHTML = data
     .map(

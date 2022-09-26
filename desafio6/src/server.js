@@ -45,13 +45,13 @@ io.on("connection", async (socket) => {
 
   //! El evento chat:messages iniciará enviando el array existente al cliente
   const allMessages = await messages.readMessages()
-  socket.emit("chat:messages", allMessages);
+  socket.emit("chat:history", allMessages);
 
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
   socket.on("chat:message",  (data) => {
     messages.saveMessage(data);
-    io.sockets.emit("chat:messages", allMessages);
+    io.sockets.emit("chat:history", allMessages);
   });
 
   //! Se escucha el evento chat:typing y se emite un mensaje a todos los sockets conectados, excepto al que "está escribiendo..." con el método broadcast
