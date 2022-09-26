@@ -19,8 +19,9 @@ const io = SocketIO(server);
 //! CONTENEDOR PRODUCTOS
 const Container = require("./models/Container");
 const contenedor = new Container("products.json");
-//! CONTENEDOR PRODUCTOS
-const Messages = []; //TODO Cambiar a archivo json
+//! CONTENEDOR MENSAJES
+const Messages = require("./models/Chat");
+const messages = new Messages("chat.json");
 
 io.on("connection", async (socket) => {
   //! Nueva conexión
@@ -43,13 +44,14 @@ io.on("connection", async (socket) => {
   //! CHAT
 
   //! El evento chat:messages iniciará enviando el array existente al cliente
-  socket.emit("chat:messages", Messages);
+  const allMessages = await messages.readMessages()
+  socket.emit("chat:messages", allMessages);
 
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
-  socket.on("chat:message", (data) => {
-    Messages.push(data);
-    io.sockets.emit("chat:messages", Messages);
+  socket.on("chat:message",  (data) => {
+    messages.saveMessage(data);
+    io.sockets.emit("chat:messages", allMessages);
   });
 
   //! Se escucha el evento chat:typing y se emite un mensaje a todos los sockets conectados, excepto al que "está escribiendo..." con el método broadcast
