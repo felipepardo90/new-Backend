@@ -12,7 +12,7 @@ const indexRoute = require("./routes/index.routes");
 app.set("port", 8080); //! CONFIG port
 app.set("json spaces", 2); //! JSON formatter
 app.set("views", __dirname + "/views");
-app.set("view engine", "hbs"); //! VIEW ENGINES
+app.set("view engine", "ejs"); //! VIEW ENGINES
 
 //! MIDDLEWARES
 
