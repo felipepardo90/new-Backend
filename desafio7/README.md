@@ -172,7 +172,7 @@ knex.schema
 
 ## KNEX CRUD: Create, Read, Update, Delete
 
-#### Insert
+### Insert
 
 ```javascript
 knex("users");
