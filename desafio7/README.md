@@ -93,7 +93,7 @@ npm i knex mysql
 
 ### Conexión a MariaDB y a las distintas bases de datos
 
-- Conección Vía HOST
+- Conexión Vía HOST
 
 ```javascript
 
@@ -110,7 +110,7 @@ var knex = require("knex")({
 
 ```
 
-- Conección Vía URL
+- Conexión Vía URL
 
 ```javascript
 var pg = require("knex")({
@@ -121,7 +121,7 @@ var pg = require("knex")({
 });
 ```
 
-- Conección Vía SQLite
+- Conexión Vía SQLite
 
 ```javascript
 var knex = require("knex")({
