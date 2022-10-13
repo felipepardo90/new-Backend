@@ -4,6 +4,7 @@ const controller = require("../controllers/products.controller")
 const completedFields = require("../libs/middlewares")
 // import completedFields from "../libs/middlewares";
 
+
 //? PRODUCTS
 
 router.get("/", controller.getAll)
