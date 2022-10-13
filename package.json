@@ -19,7 +19,6 @@
   "name": "new-backend",
   "description": "+ Repaso de Javascript básico\r + NodeJS\r + Sincronía y asincronía\r + Manejo de archivos con file system (fs)\r + Express",
   "version": "1.0.0",
-  "type":"module",
   "main": "pruebas.js",
   "repository": {
     "type": "git",
