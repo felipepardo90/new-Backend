@@ -1,8 +1,8 @@
-const fs = require("fs");
 
 class Container {
-  constructor(file) {
-    this.file = file;
+  constructor(config, table) {
+    this.config = config;
+    this.table = table
   }
 
   async save(object) {

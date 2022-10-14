@@ -1,4 +1,24 @@
-const app = require("./app");
+const app = require("./app.js");
+//! DATABASE
+const knex = require("knex");
+const connection = require("./db/db");
+const Knex = knex(connection);
+
+Knex.schema
+  .createTable("usuarios", (table) => {
+    table.increments("id");
+    table.string("name");
+    table.string("lastname");
+    table.string("email");
+  })
+  .then(() => console.log("tabla creada"))
+  .catch((e) => {
+    console.log("error!", e);
+    throw e;
+  })
+  .finally(() => {
+    Knex.destroy();
+  });
 
 //! STARTING SERVER
 
@@ -44,12 +64,12 @@ io.on("connection", async (socket) => {
   //! CHAT
 
   //! El evento chat:messages iniciará enviando el array existente al cliente
-  const allMessages = await messages.readMessages()
+  const allMessages = await messages.readMessages();
   socket.emit("chat:history", allMessages);
 
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
-  socket.on("chat:message",  (data) => {
+  socket.on("chat:message", (data) => {
     messages.saveMessage(data);
     io.sockets.emit("chat:history", allMessages);
   });
