@@ -9,4 +9,4 @@ const connection = {
   },
 };
 
-module.exports = connection;
+export default connection;
