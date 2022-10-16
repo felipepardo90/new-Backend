@@ -1,11 +1,15 @@
-const express = require("express");
-const path = require("path");
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
-const morgan = require("morgan");
+import morgan from "morgan";
 
 //! ROUTES
 
-const indexRoute = require("./routes/index.routes");
+import indexRoute from "./routes/index.routes.js";
 
 //! SETTINGS
 
@@ -22,17 +26,4 @@ app.use(morgan("dev"));
 app.use("/", express.static(path.join(__dirname, "../public"))); //! STATIC FILES
 app.use("/", indexRoute); //
 
-//! CONFIGURACIÓN EXTRA HBS
-
-const { engine } = require("express-handlebars");
-app.engine(
-  "hbs",
-  engine({
-    extname: ".hbs",
-    defaultLayout: path.join(__dirname, "/views/layout/main.hbs"),
-    layoutsDir: path.join(__dirname, "./views/layout"),
-    partialsDir: path.join(__dirname, "/views/partials"),
-  })
-);
-
-module.exports = app;
+export default app;

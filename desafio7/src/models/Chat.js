@@ -1,6 +1,6 @@
-const fs = require("fs");
+// const fs = require("fs");
 
-class Messages {
+export default class Messages {
   constructor(file) {
     this.file = file;
   }
@@ -31,5 +31,3 @@ class Messages {
     }
   }
 }
-
-module.exports = Messages;

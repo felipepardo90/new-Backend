@@ -7,4 +7,4 @@ const completedFields = (req, res, next) => {
     : res.status(300).send({ message: "Debe completar todos los campos" });
 };
 
-module.exports = completedFields;
+export default completedFields;

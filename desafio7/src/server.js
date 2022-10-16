@@ -1,29 +1,20 @@
-const app = require("./app.js");
-//! DATABASE
-const knex = require("knex");
-const connection = require("./db/db");
-const Knex = knex(connection);
-
-Knex.schema
-  .createTable("usuarios", (table) => {
-    table.increments("id");
-    table.string("name");
-    table.string("lastname");
-    table.string("email");
-  })
-  .then(() => console.log("tabla creada"))
-  .catch((e) => {
-    console.log("error!", e);
-    throw e;
-  })
-  .finally(() => {
-    Knex.destroy();
-  });
+import app from "./app.js";
+//! WEBSOCKETS
+import { Server as SocketServer } from "socket.io";
+import { Server as HTTPServer } from "http";
+const httpServer = new HTTPServer(app);
+const io = new SocketServer(httpServer);
+//! CONTENEDOR PRODUCTOS
+import Container from "./models/Container.js";
+const contenedor = new Container("products.json");
+//! CONTENEDOR MENSAJES
+import Messages from "./models/Chat.js";
+const messages = new Messages("chat.json");
 
 //! STARTING SERVER
 
 const server = app.listen(app.get("port"), () => {
-  console.log(`Servidor express iniciado en puerto ${app.get("port")}`);
+  console.log(`Express Server connected on port ${app.get("port")}`);
 });
 
 //! ERROR HANDLER
@@ -31,17 +22,6 @@ const server = app.listen(app.get("port"), () => {
 server.on("error", (error) => {
   console.log(`Error !!!: ${error}`);
 });
-
-//! WEBSOCKETS
-
-const SocketIO = require("socket.io");
-const io = SocketIO(server);
-//! CONTENEDOR PRODUCTOS
-const Container = require("./models/Container");
-const contenedor = new Container("products.json");
-//! CONTENEDOR MENSAJES
-const Messages = require("./models/Chat");
-const messages = new Messages("chat.json");
 
 io.on("connection", async (socket) => {
   //! Nueva conexión

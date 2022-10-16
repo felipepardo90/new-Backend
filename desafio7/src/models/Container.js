@@ -1,5 +1,4 @@
-
-class Container {
+export default class Container {
   constructor(config, table) {
     this.config = config;
     this.table = table
@@ -116,4 +115,3 @@ class Container {
   }
 }
 
-module.exports = Container;
