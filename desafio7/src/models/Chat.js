@@ -1,4 +1,4 @@
-// const fs = require("fs");
+import knex from "knex";
 
 export default class Messages {
   constructor(file) {

@@ -1,19 +1,21 @@
+//! DATABASE Conn
+import MySQLConn from "../db/connection.js"
 //! CONTENEDOR /////////////////////////////////
 // const Container = require("../models/Container");
 import Container from "../models/Container.js";
-const contenedor = new Container("products.json");
+const DBprod = new Container(MySQLConn, "Products")
 //! CONTENEDOR /////////////////////////////////
 const controller = {};
 
 controller.getAll = async (req, res) => {
   //* DEVUELVE TODOS LOS PRODUCTOS
-  const data = await contenedor.getAll();
+  const data = await DBprod.getAll();
   res.status(200).render("products", { products: data });
 };
 
 controller.getById = async (req, res) => {
   //* DEVUELVE UN PRODUCTO SEGÚN SU ID
-  const data = await contenedor.getById(req.params.id);
+  const data = await DBprod.getById(req.params.id);
 
   //! Si el id generado no coincide con ningún producto, devuelve null; de lo contrario, envía la información solicitada
   data
@@ -24,7 +26,7 @@ controller.getById = async (req, res) => {
 controller.post = async (req, res) => {
   //* RECIBE Y AGREGA UN PRODUCTO, Y LO DEVUELVE CON SU ID ASIGNADO
   const { title, price, thumbnail } = req.body;
-  const data = await contenedor.save({ title, price, thumbnail });
+  const data = await DBprod.save({ title, price, thumbnail });
   data == null
     ? res.status(500).json({ message: ` [[${title}]] ya existe en el archivo` })
     : res.status(200).render("index");
@@ -34,7 +36,7 @@ controller.put = async (req, res) => {
   //* RECIBE Y ACTUALIZA UN PRODUCTO SEGÚN SU ID
   const { id } = req.params;
   const newObject = req.body;
-  const data = await contenedor.update(+id, newObject);
+  const data = await DBprod.update(+id, newObject);
 
   data != null
     ? res.status(200).json({ message: `Producto ${id} modificado con éxito` })
@@ -43,7 +45,7 @@ controller.put = async (req, res) => {
 
 controller.delete = async (req, res) => {
   //* ELIMINA UN PRODUCTO SEGÚN SU ID
-  const data = await contenedor.deleteById(req.params.id);
+  const data = await DBprod.deleteById(req.params.id);
   data
     ? res
         .status(200)
