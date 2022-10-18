@@ -1,20 +1,19 @@
 //! DATABASE Conn
-import MySQLConn from "../db/connection.js"
+import MySQLConn from "../DB/mysql/connection.js"
 //! CONTENEDOR /////////////////////////////////
-// const Container = require("../models/Container");
 import Container from "../models/Container.js";
 const DBprod = new Container(MySQLConn, "Products")
 //! CONTENEDOR /////////////////////////////////
 const controller = {};
 
 controller.getAll = async (req, res) => {
-  //* DEVUELVE TODOS LOS PRODUCTOS
+  //! DEVUELVE TODOS LOS PRODUCTOS                
   const data = await DBprod.getAll();
   res.status(200).render("products", { products: data });
 };
 
 controller.getById = async (req, res) => {
-  //* DEVUELVE UN PRODUCTO SEGÚN SU ID
+  //! DEVUELVE UN PRODUCTO SEGÚN SU ID
   const data = await DBprod.getById(req.params.id);
 
   //! Si el id generado no coincide con ningún producto, devuelve null; de lo contrario, envía la información solicitada
@@ -24,7 +23,7 @@ controller.getById = async (req, res) => {
 };
 
 controller.post = async (req, res) => {
-  //* RECIBE Y AGREGA UN PRODUCTO, Y LO DEVUELVE CON SU ID ASIGNADO
+  //! RECIBE Y AGREGA UN PRODUCTO, Y LO DEVUELVE CON SU ID ASIGNADO
   const { title, price, thumbnail } = req.body;
   const data = await DBprod.save({ title, price, thumbnail });
   data == null
@@ -33,7 +32,7 @@ controller.post = async (req, res) => {
 };
 
 controller.put = async (req, res) => {
-  //* RECIBE Y ACTUALIZA UN PRODUCTO SEGÚN SU ID
+  //! RECIBE Y ACTUALIZA UN PRODUCTO SEGÚN SU ID
   const { id } = req.params;
   const newObject = req.body;
   const data = await DBprod.update(+id, newObject);
@@ -44,7 +43,7 @@ controller.put = async (req, res) => {
 };
 
 controller.delete = async (req, res) => {
-  //* ELIMINA UN PRODUCTO SEGÚN SU ID
+  //! ELIMINA UN PRODUCTO SEGÚN SU ID
   const data = await DBprod.deleteById(req.params.id);
   data
     ? res
