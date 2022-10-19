@@ -37,6 +37,7 @@ io.on("connection", async (socket) => {
   //! Guardar producto
   socket.on("product:new", async (object) => {
     const data = await DBprod.save(object);
+    const products = await DBprod.getAll();
     data === null
       ? socket.emit("product:submit", { product: object, status: true })
       : socket.emit("product:submit", { product: object, status: false });
@@ -51,8 +52,8 @@ io.on("connection", async (socket) => {
 
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
-  socket.on("chat:message", (data) => {
-    DBmsg.saveMessage(data);
+  socket.on("chat:message", async (data) => {
+    const allMessages = await DBmsg.saveMessage(data);
     io.sockets.emit("chat:history", allMessages);
   });
 
