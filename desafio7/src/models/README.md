@@ -1,54 +1,47 @@
 # API CONTAINER
 
-Se va a manejar el módulo fs para poder reescribir el archivos _productos.json_ en la carpeta raiz del repositorio.
+Se va a manejar el módulo knex para realizar el CRUD en las bases de datos (mariaDB y SQLite3).
 Los métodos que se van a utilizar se van a encargar de las validaciones y la reescritura de este archivo.
 
 ```javascript
-const fs = require("fs")
+const knex = require("knex");
 ```
 
 ## Métodos
 
-Todos los métodos estarán incluidos en la clase Container, cuyo constructor recibe como parámetro el archivo json de productos.
+Todos los métodos estarán incluidos en la clase Container, cuyo constructor recibe como parámetro la configuración y el nombre de la tabla a trabajar.
 
 ### Save -
 
-- Recibe un objeto, lo guarda en el archivo y devuelve el id asignado
+- Recibe un objeto, lo guarda en la base de datos y devuelve el objeto, para trabajar con el usuario en los mensajes.
 
 ```javascript
-class Container {
-  constructor(file) {
-    this.file = file;
+export default class Container {
+  constructor(config, table) {
+    this.knex = knex(config);
+    this.table = table;
   }
 
   async save(object) {
     try {
-      const dataToParse = await fs.promises.readFile(this.file, "utf-8");
-      const dataParsed = JSON.parse(dataToParse);
-      // * ¿El producto ya existe en el archivo?
-      // Se va a buscar al archivo que tenga el mismo nombre
-      const productFound = dataParsed.find(
-        ({ title }) => title === object.title
-      );
-
-      if (productFound) {
-        // * Si el producto ya existe, lo retorna
+      // Se corrobora si el objeto existe en el archivo
+      const productFound = await this.knex
+        .from(this.table)
+        .where("title", object.title);
+// Esta comprobación enviará un array con un objeto con un nombre predeterminado, el cuál tendrá los datos del objeto encontrado, si no lo encuentra, envía el array vacío
+      if (productFound.length != 0) {
+        // Si lo encuentra, retorna null
         return null;
       } else {
-        // * Si no existe, lo agrega y retorna el objeto con id asignado
-        object.id = dataParsed.length + 1;
-        dataParsed.push(object);
-        // * Al nuevo archivo se le da un formato de json con sus espacios y se sobreescribe en el archivo con writeFile
-        const updatedFile = JSON.stringify(dataParsed, null, " ");
-        fs.promises.writeFile(this.file, updatedFile);
+        // Si no lo encuentra, lo graba en la base de datos
+        await this.knex.insert(object).into(this.table);
         return object;
       }
     } catch (error) {
-      //? Handler error
+      // Handler error
       console.error(`Se produjo un error en save:${error}`);
     }
   }
-}
 ```
 
 ### Update
@@ -56,38 +49,28 @@ class Container {
 - Recibe un id y modifica el objeto con ese id, por un nuevo objeto ingresado
 
 ```javascript
-class Container {
-  constructor(file) {
-    this.file = file;
+export default class Container {
+  constructor(config, table) {
+    this.knex = knex(config);
+    this.table = table;
   }
-
-  // ? Recibe un id y modifica el objeto con ese id, por un nuevo objeto ingresado
-
   async update(idEntered, object) {
     try {
-      const dataToParse = await fs.promises.readFile(this.file, "utf-8");
-      const dataParsed = JSON.parse(dataToParse);
-      // * Se filtran los productos que no cumplen las condiciones (coincidir con el id proporcionado)
-      const leakedID = dataParsed.filter(({ id }) => id != idEntered);
-      // * Encuentra el producto con el id proporcionado
-      const productFound = dataParsed.find(({ id }) => id == idEntered);
+      // Se corrobora si el objeto existe en el archivo
+      const productFound = await this.knex
+        .from(this.table)
+        .where("id", idEntered);
 
-      if (productFound) {
-        // * Encuentra el archivo y lo actualiza. Lo agrega al array en donde se filtlaron los productos diferentes al id ingresado
-        const productFound = { ...object, id: idEntered };
-        leakedID.push(productFound);
-        // * Se actualiza el archivo
-        const updatedFile = JSON.stringify(leakedID, null, " ");
-        fs.promises.writeFile(this.file, updatedFile);
-        console.log(`Producto ${idEntered} modificado con éxito`, productFound);
-        // * Retorna el producto que se va a actualizar
+      if (productFound.length != 0) {
+        // Si encuentra el objeto, modifica sus propiedades
+        await this.knex.from(this.table).where("id", idEntered).update(object);
         return productFound;
       } else {
-        // * Si no encuentra el producto, retorna null - (Este valor permitirá al método put enviar un mensaje al cliente sobre que no se ha encontrado el producto)
+        // Si no lo encuentra, retorna null
         return null;
       }
     } catch (error) {
-      // * Handler error
+      // Handler error
       console.error(`Se produjo un error en saveById:${error}`);
     }
   }
@@ -99,105 +82,128 @@ class Container {
 - Buscará todos los productos en el archivo, y también permite filtrar producto por producto, a través de un id
 
 ```javascript
-class Container {
-  constructor(file) {
-    this.file = file;
+export default class Container {
+  constructor(config, table) {
+    this.knex = knex(config);
+    this.table = table;
   }
 
   async getById(idEntered) {
-    // ? Recibe un id y devuelve el objeto con ese id, o null si no está
-
     try {
-      const dataToParse = await fs.promises.readFile(this.file, "utf-8");
-      const dataParsed = JSON.parse(dataToParse);
-      // * ¿El producto ya existe en el archivo?
-      const idFound = dataParsed.find(({ id }) => id == idEntered);
+      // BUsca el producto y lo guarda en una constante
+      const idFound = await this.knex.from(this.table).where("id", idEntered);
 
-      if (idFound) {
-        // * Si el producto ya existe, lo devuelve
-        console.log(`Se obtuvo el producto ${idFound.title}`);
+      if (idFound.length != 0) {
+        // Si existe, lo retorna
+        console.log(`Se obtuvo el producto ${idFound[0].title}`);
         return idFound;
       } else {
-        // * Si no existe, retorna un mensaje
+        // Si no existe, retorna null
         console.log("No se han encontrado productos");
+        return null;
       }
     } catch (error) {
-      // * Handler error
+      // Handler Error
       console.error(`Se produjo un error en getByID: ${error}`);
     }
   }
 
   async getAll() {
-    // ? Devuelve un array con los objetos presentes en el archivo
-
     try {
-      const dataToParse = await fs.promises.readFile(this.file, "utf-8");
-      const dataParsed = JSON.parse(dataToParse);
-
-      if (dataParsed.length > 0) {
-        // * Si el array contiene elementos, lo retorna
-        return dataParsed;
-      } else {
-        // * Si no contiene, envía un mensaje a la consola
-        console.log("No hay elementos disponibles");
-      }
+      // Retorna todos los objetos presentes en la tabla consultada
+      return await this.knex.select("*").from(this.table);
     } catch (error) {
-      // * Handler error
+      // Handler error
       console.error(`Se ha producido un error en getAll: ${error}`);
     }
   }
 }
 ```
 
-
 ### Delete By Id y Delete All
 
 - Eliminará todos los productos en el archivo, y también permite filtrar producto por producto, y eliminarlo a través de un id
 
 ```javascript
-class Container {
-  constructor(file) {
-    this.file = file;
+export default class Container {
+  constructor(config, table) {
+    this.knex = knex(config);
+    this.table = table;
   }
 
-async deleteById(idEntered) {
-    // ? Elimina del archivo el objeto con el Id buscado
+  async deleteById(idEntered) {
     try {
-      const dataToParse = await fs.promises.readFile(this.file, "utf-8");
-      const dataParsed = JSON.parse(dataToParse);
-      // * Se filtran los productos que no cumplen las condiciones (coincidir con el id proporcionado)
-      const leakedID = dataParsed.filter(({ id }) => id != idEntered);
-      // * Encuentra el producto con el id proporcionado
-      const idFound = dataParsed.find(({ id }) => id == idEntered);
-
-      if (idFound) {
-        // * Si encuentra el producto con el id proporcionado, lo retorna pero antes actualiza el archivo con el array proporcionado con el metodo filter()  -- LEAKEDID
+      // Busca el producto mediante un id y lo guarda en una constante
+      const idFound = await this.knex.from(this.table).where("id", idEntered);
+      if (idFound.length != 0) {
+        // Si lo encuentra, lo elimina. Retorna el producto eliminado
         console.log(
-          `Se ha eliminado el objeto con id:${idEntered} >> [[${idFound.title}]]`
+          `Se ha eliminado el objeto con id:${idEntered} >> [[${idFound[0].title}]]`
         );
-        // * Se actualiza el archivo
-        const updatedFile = JSON.stringify(leakedID, null, " ");
-        fs.promises.writeFile(this.file, updatedFile);
-        return idFound;
+        await this.knex.from(this.table).where("id", idEntered).del();
+        return idFound[0];
       } else {
-        // * Si no existe, envía un mensaje a la consola
+        // Si no lo encuentra, retorna null
         console.log(`No se ha encontrado el objeto con id: ${idEntered}`);
+        return null;
       }
     } catch (error) {
-      // * Handler error
+      // Handler Error
       console.error(`Se ha producido un error en deleteById: ${error}`);
     }
   }
 
   async deleteAll() {
-    // ? Elimina todos los objetos presentes en el archivo
     try {
+      // Elimina todos los objetos presentes en la tabla
       console.log("Todos los objetos fueron eliminados");
-      // * Borrado de todos los objetos (Se sobreescribe el archivo a un array vacío)
-      await fs.promises.writeFile(this.file, "[]");
+      return await this.knex.from(this.table).del();
     } catch (error) {
-      // * Handler Error
+      // Handler error
       console.error(`Se ha producido un error en deleteAll: ${error}`);
+    }
+  }
+}
+```
+
+# APi CHAT
+
+En el caso de la clase Messages, se van a implementar métodos que permitan guardar y recibir mensajes desde la base de datos (SQLite3).
+
+## Métodos
+
+Todos los métodos estarán incluidos en la clase Messages, cuyo constructor recibe como parámetro la configuración y el nombre de la tabla a trabajar, al igual que el constructor de la clase Container.
+
+### saveMesage & readMessages 
+
+- Recibe un objeto (mensaje con propiedades de *nombre*, *timestamp* y el propio *mensaje* envíado desde el cliente), lo guarda en la base de datos y devuelve todos los elementos (mensajes) de la tabla, para poder enviarlos desde sockets. Ambos métodos parecen similares pero a diferencia que save al momento de guardar un mensaje estará también enviando la totalidad de mensajes, con el último agregado.
+- 
+```javascript
+export default class Messages {
+  constructor(config, table) {
+    this.knex = knex(config);
+    this.table = table;
+  }
+
+  async saveMessage(object) {
+    try {
+      // Se inserta un nuevo mensaje en la tabla
+      await this.knex.insert(object).into(this.table);
+      // Retorna todos los mensajes
+      return await this.knex.select("*").from(this.table);
+    } catch (error) {
+      // Handler error
+      console.error(`Se produjo un error en saveMessage:${error}`);
+    }
+  }
+
+  async readMessages() {
+    try {
+      // Retorna todos los mensajes, al momento de inicar el chat, el historial de mensajes se reflejará socket por socket
+      return await this.knex.select("*").from(this.table);
+    } catch (error) {
+      // Handler error
+      console.error(`Se produjo un error en readMessages:${error}`);
     }
   }
 }
