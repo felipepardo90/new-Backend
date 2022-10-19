@@ -11,7 +11,7 @@ const knex = require("knex");
 
 Todos los métodos estarán incluidos en la clase Container, cuyo constructor recibe como parámetro la configuración y el nombre de la tabla a trabajar.
 
-### Save -
+### Save 
 
 - Recibe un objeto, lo guarda en la base de datos y devuelve el objeto, para trabajar con el usuario en los mensajes.
 
@@ -166,7 +166,7 @@ export default class Container {
 }
 ```
 
-# APi CHAT
+# API CHAT
 
 En el caso de la clase Messages, se van a implementar métodos que permitan guardar y recibir mensajes desde la base de datos (SQLite3).
 
@@ -177,7 +177,7 @@ Todos los métodos estarán incluidos en la clase Messages, cuyo constructor rec
 ### saveMesage & readMessages 
 
 - Recibe un objeto (mensaje con propiedades de *nombre*, *timestamp* y el propio *mensaje* envíado desde el cliente), lo guarda en la base de datos y devuelve todos los elementos (mensajes) de la tabla, para poder enviarlos desde sockets. Ambos métodos parecen similares pero a diferencia que save al momento de guardar un mensaje estará también enviando la totalidad de mensajes, con el último agregado.
-- 
+  
 ```javascript
 export default class Messages {
   constructor(config, table) {
