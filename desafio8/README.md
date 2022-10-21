@@ -1,6 +1,6 @@
 ## Creamos la base de datos ecommerce en mongo shell
 
-**use ecommerce**
+``` **use ecommerce** ```
 
 ### **Creamos e insertamos** documentos (10) en la colección _products_, y _messages_
 
