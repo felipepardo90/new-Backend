@@ -76,44 +76,44 @@ db.products.insertMany([
 ```
 db.messages.insertMany([
   {
-    "username": "user1@users",
-    "message": "Hi Mark",
-    "date": "21/10/2022, 16:37:26"
+    username: "user1@users",
+    messsage: "Hi Mark",
+    date: "21/10/2022, 16:37:26"
   },
   {
-    "username": "user2@users",
-    "message": "Hello Lucas, how are you?",
-    "date": "21/10/2022, 16:39:12"
+    username: "user2@users",
+    messsage: "Hello Lucas, how are you?",
+    date: "21/10/2022, 16:39:12"
   },
   {
-    "username": "user1@users",
-    "message": "fine, did u know when the next class will be?",
-    "date": "21/10/2022, 16:40:43"
+    username: "user1@users",
+    messsage: "fine, did u know when the next class will be?",
+    date: "21/10/2022, 16:40:43"
   },
   {
-    "username": "user3@users",
-    "message": "Hi, i need to know too",
-    "date": "21/10/2022, 16:43:23"
+    username: "user3@users",
+    messsage: "Hi, i need to know too",
+    date: "21/10/2022, 16:43:23"
   },
   {
-    "username": "user2@users",
-    "message": "I don't know, let's ask Joseph",
-    "date": "21/10/2022, 16:44:44"
+    username: "user2@users",
+    messsage: "I don't know, let's ask Joseph",
+    date: "21/10/2022, 16:44:44"
   },
   {
-    "username": "user2@users",
-    "message": "@Joseph, did u know something?",
-    "date": "21/10/2022, 16:45:06"
+    username: "user2@users",
+    messsage: "@Joseph, did u know something?",
+    date: "21/10/2022, 16:45:06"
   },
   {
-    "username": "user1@users",
-    "message": "I think it's not active",
-    "date": "21/10/2022, 16:47:22"
+    username: "user1@users",
+    messsage: "I think it's not active",
+    date: "21/10/2022, 16:47:22"
   },
   {
-    "username": "user4@users",
-    "message": "Hi, guys, I think friday at 5",
-    "date": "21/10/2022, 16:57:34"
+    username: "user4@users",
+    message: "Hi, guys, I think friday at 5",
+    date: "21/10/2022, 16:57:34"
   },
   {
     "username": "user4@users",
@@ -121,9 +121,9 @@ db.messages.insertMany([
     "date": "21/10/2022, 16:59:38"
   },
   {
-    "username": "user3@users",
-    "message": "Just in case I'm going to connect 10 minutes before 4",
-    "date": "21/10/2022, 16:37:58"
+    username: "user3@users",
+    messsage: "Just in case I'm going to connect 10 minutes before 4",
+    date: "21/10/2022, 17:37:58"
   }
 ])
 ```
@@ -133,3 +133,40 @@ db.messages.insertMany([
 - `db.products.find()`
 
 - `db.messages.find()`
+
+###  **Vamos a ver las estadísticas de cada collección**
+
+- `db.products.countDocuments()`
+
+- `db.messages.countDocuments()`
+
+# **CRUD**
+
+- **Agregamos un producto más en la colección *products***
+
+```
+db.products.insertOne( {
+    title: "Púas guitarra",
+    price: 780,
+    thumbnail:
+      "https://http2.mlstatic.com/D_NQ_NP_920883-MLA45349997453_032021-W.jpg",
+  })
+```
+
+- **Realizamos consultas específicas**
+    
+   - *Listar los productos con precio menor a 1000 pesos* :
+  
+    ```db.products.find({price < 1000})```
+
+   - *Listar los productos con precio entre 1000 y 3000 pesos* :
+    
+    ```db.products.find({price < 1000})```
+
+   - *Listar los productos con precio mayor a 3000 pesos* :
+    
+    ```db.products.find({price < 1000})```
+
+   - *Realizar una consulta que traiga solo el nombre del tercer producto más barato*
+    
+    ```db.products.find({price < 1000})``` 
