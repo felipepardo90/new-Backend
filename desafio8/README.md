@@ -30,7 +30,7 @@ Algunos comandos para iniciar la operación con la base de datos:
 - **```use:```** selecciona la base de datos activa (si no existe, la crea)
 - **```show collections:```** muestra la lista de colecciones de esta base
 - **```db.personas.insertOne({clave:valor, ...}):```** crea una colección en forma implicita llamada *personas* y le inserta un documento.
-- **```db.personas.insertOne({clave:valor, ...}):```** busca todos los documentos que están dentro de la colección *personas*
+- **```db.personas.find():```** busca todos los documentos que están dentro de la colección *personas*
 
 # MongoDB: ventajas
 
