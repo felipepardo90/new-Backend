@@ -184,9 +184,8 @@ db.products.insertOne( {
 
     - ```db.products.deleteMany({price:{$lt:1000}})```
 
-# **CRUD**
+# **Crear un usuario *pepe*, con clave:*asd456* que solo pueda leer la base de datos ecommerce. Verificar que no pueda cambiar la información**
 
-- **Crear un usuario *pepe*, con clave:*asd456* que solo pueda leer la base de datos ecommerce. Verificar que no pueda cambiar la información**
 
 1. ```Use admin```
 2. ```db.createUser({user:"pepe", "pwd":"asd456", roles:[{role:"read", db:"coder"}]})```
