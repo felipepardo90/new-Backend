@@ -1,6 +1,6 @@
 ## Creamos la base de datos ecommerce en mongo shell
 
-``` use ecommerce ```
+`use ecommerce`
 
 ### **Creamos e insertamos** documentos (10) en la colección _products_, y _messages_
 
@@ -134,15 +134,15 @@ db.messages.insertMany([
 
 - `db.messages.find()`
 
-###  **Vamos a ver las estadísticas de cada collección**
+### **Vamos a ver las estadísticas de cada collección**
 
 - `db.products.countDocuments()`
 
 - `db.messages.countDocuments()`
 
-# **CRUD**
+### **CRUD**
 
-- **Agregamos un producto más en la colección *products***
+- **Agregamos un producto más en la colección _products_**
 
 ```
 db.products.insertOne( {
@@ -154,38 +154,37 @@ db.products.insertOne( {
 ```
 
 - **Realizamos consultas específicas**
-    
-   - *Listar los productos con precio menor a 1000 pesos* :
-  
-    ```db.products.find({price:{$lt:1000}})```
 
-   - *Listar los productos con precio entre 1000 y 3000 pesos* :
-    
-    ```db.products.find({$and: [{price:{$gte:1000}}, {price:{$lte:3000}}]})```
+  - _Listar los productos con precio menor a 1000 pesos_ :
 
-   - *Listar los productos con precio mayor a 3000 pesos* :
-    
-    ```db.products.find({},{title:1, _id:0})```
+  `db.products.find({price:{$lt:1000}})`
 
-   - *Realizar una consulta que traiga solo el nombre del tercer producto más barato*
-    
-    ```db.products.find({},{title:1, _id:0}).skip(2).limit(1).sort({price:1})``` 
+  - _Listar los productos con precio entre 1000 y 3000 pesos_ :
+
+  `db.products.find({$and: [{price:{$gte:1000}}, {price:{$lte:3000}}]})`
+
+  - _Listar los productos con precio mayor a 3000 pesos_ :
+
+  `db.products.find({},{title:1, _id:0})`
+
+  - _Realizar una consulta que traiga solo el nombre del tercer producto más barato_
+
+  `db.products.find({},{title:1, _id:0}).skip(2).limit(1).sort({price:1})`
 
 - **Hacer una actualización sobre todos los productos**
 
-   - *Agregamos el campo **stock**, con un valor de 100, a todos los documentos*
-   ```db.products.updateMany({_id:{$exists:true}},{$set:{stock:100}}, {$upsert:true})```
+  - _Agregamos el campo **stock**, con un valor de 100, a todos los documentos_
+    `db.products.updateMany({_id:{$exists:true}},{$set:{stock:100}}, {$upsert:true})`
 
 - **Cambiar el stock a cero de los productos con precios mayores a 4000 pesos**
 
-    - ```db.products.updateMany({price:{$gt:4000}},{$set:{stock:0}})```
+  - `db.products.updateMany({price:{$gt:4000}},{$set:{stock:0}})`
 
 - **Borrar los productos con precio menor a 1000 pesos**
 
-    - ```db.products.deleteMany({price:{$lt:1000}})```
+  - `db.products.deleteMany({price:{$lt:1000}})`
 
-# **Crear un usuario *pepe*, con clave:*asd456* que solo pueda leer la base de datos ecommerce. Verificar que no pueda cambiar la información**
+### **Crear un usuario _pepe_, con clave:_asd456_ que solo pueda leer la base de datos ecommerce. Verificar que no pueda cambiar la información**
 
-
-1. ```Use admin```
-2. ```db.createUser({user:"pepe", "pwd":"asd456", roles:[{role:"read", db:"coder"}]})```
+1. `Use admin`
+2. `db.createUser({user:"pepe", pwd:"asd456", roles:[{role:"read", db:"ecommerce"}]})`
