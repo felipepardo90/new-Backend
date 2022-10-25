@@ -157,16 +157,36 @@ db.products.insertOne( {
     
    - *Listar los productos con precio menor a 1000 pesos* :
   
-    ```db.products.find({price < 1000})```
+    ```db.products.find({price:{$lt:1000}})```
 
    - *Listar los productos con precio entre 1000 y 3000 pesos* :
     
-    ```db.products.find({price < 1000})```
+    ```db.products.find({$and: [{price:{$gte:1000}}, {price:{$lte:3000}}]})```
 
    - *Listar los productos con precio mayor a 3000 pesos* :
     
-    ```db.products.find({price < 1000})```
+    ```db.products.find({},{title:1, _id:0})```
 
    - *Realizar una consulta que traiga solo el nombre del tercer producto más barato*
     
-    ```db.products.find({price < 1000})``` 
+    ```db.products.find({},{title:1, _id:0}).skip(2).limit(1).sort({price:1})``` 
+
+- **Hacer una actualización sobre todos los productos**
+
+   - *Agregamos el campo **stock**, con un valor de 100, a todos los documentos*
+   ```db.products.updateMany({_id:{$exists:true}},{$set:{stock:100}}, {$upsert:true})```
+
+- **Cambiar el stock a cero de los productos con precios mayores a 4000 pesos**
+
+    - ```db.products.updateMany({price:{$gt:4000}},{$set:{stock:0}})```
+
+- **Borrar los productos con precio menor a 1000 pesos**
+
+    - ```db.products.deleteMany({price:{$lt:1000}})```
+
+# **CRUD**
+
+- **Crear un usuario *pepe*, con clave:*asd456* que solo pueda leer la base de datos ecommerce. Verificar que no pueda cambiar la información**
+
+1. ```Use admin```
+2. ```db.createUser({user:"pepe", "pwd":"asd456", roles:[{role:"read", db:"coder"}]})```
