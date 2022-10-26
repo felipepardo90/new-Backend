@@ -75,7 +75,7 @@ db.coll.renameCollection("new_coll", true) // renombra una colección, el 2do pa
 
 ### Comando Create (_insert_)
 
-```
+```javascript
 db.coll.insertOne({name: "Max"})
 db.coll.insert([{name: "Max"}, {name: "Alex"}])
 db.coll.insert([{name: "Max"}, {name: "Alex"}], {ordered: false})
@@ -85,7 +85,7 @@ db.coll.insert({name: "Max"}, {"writeConcern":{"w":"majority", "wtimeout": 5000}
 
 ### Comando Read (_find_)
 
-```
+```javascript
 db.coll.findOne(); // returns a single document
 db.coll.find(); // returns a cursor - show 20 results - "it" to display more
 db.coll.find().pretty();
