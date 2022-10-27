@@ -144,7 +144,7 @@ db.messages.insertMany([
 
 - **Agregamos un producto más en la colección _products_**
 
-```
+```javascript
 db.products.insertOne( {
     title: "Púas guitarra",
     price: 780,
