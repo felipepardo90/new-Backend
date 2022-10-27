@@ -266,15 +266,11 @@ IMPORTANTE:
 - Ejecutar en el cliente **use admin** amtes de createUser(...)
 
 ```javascript
-db.createUser(
-    {
-        user;"lector",
-        pwd:"123456",
-        roles:[
-            {role:"read", db:"blog"}
-        ]
-    }
-)
+db.createUser({
+  user: "lector",
+  pwd: "123456",
+  roles: [{ role: "read", db: "blog" }],
+});
 ```
 
 - **MongoDB** viene con roles predefinidos. Uno de ellos es el **role read**, que permite ejecutar métodos de sólo lectura.
@@ -284,15 +280,11 @@ Con el rol readWrite el usuario tendrá acceso a los **métodos de lectura y esc
 A continuación debemos verificar que cada usuario cuenta con los accesos correctos.
 
 ```javascript
-db.createUser(
-    {
-        user;"lector",
-        pwd:"123456",
-        roles:[
-            {role:"readWrite", db:"blog"}
-        ]
-    }
-)
+db.createUser({
+  user: "lector",
+  pwd: "123456",
+  roles: [{ role: "readWrite", db: "blog" }],
+});
 ```
 
 ### Pruebas de accesos: usuario _lector_
@@ -355,7 +347,7 @@ db.posts.insertOne({ title: "Artículo 3" });
 3. Funciona bien el permiso de lectura, ahora intentaremos insertar el Artículo #3:
 
 ```javascript
-db.posts.insertOne({title: "Artículo 3"})
+db.posts.insertOne({ title: "Artículo 3" });
 ```
 
 4. Funciona bien el permiso de lectura, ahora intentaremos insertar el Artículo #3
