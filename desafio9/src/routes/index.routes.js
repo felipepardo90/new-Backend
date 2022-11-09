@@ -2,6 +2,7 @@ import { Router } from "express";
 const router = Router();
 import productsRoute from "./products.routes.js"
 import controller from "../controllers/index.controller.js"
+import fakerTest from "../controllers/products.controller.js"
 
 
 //? INDEX

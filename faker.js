@@ -1,3 +1,11 @@
 import { faker } from "@faker-js/faker";
 faker.locale = "es_MX";
-console.log(faker.name.firstName("male"));
+const { name, internet } = faker;
+let info = [];
+for (let index = 1; index <= 20; index++) {
+  info.push({
+    nombre: `${name.firstName()} ${name.lastName()}`,
+    email: internet.email(),
+  });
+}
+console.table(info);
