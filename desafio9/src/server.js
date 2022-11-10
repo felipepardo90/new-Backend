@@ -54,6 +54,7 @@ io.on("connection", async (socket) => {
 
   socket.on("chat:message", async (data) => {
     const allMessages = await DBmsg.saveMessage(data);
+    console.log(allMessages)
     io.sockets.emit("chat:history", allMessages);
   });
 
