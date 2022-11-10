@@ -8,7 +8,7 @@
     <title>CHAT WEBSOCKETS</title>
   </head>
   <body>
-    <!--? FORM PRODUCTOS -->
+    <!--* FORM PRODUCTOS -->
 
     <form class="form" id="products-form">
       <h2 class="form-title">Ingresar productos</h2>
@@ -63,28 +63,38 @@
       </div>
     </form>
 
-    <!--? PRODUCTS -->
+    <!--* PRODUCTS -->
 
     <h1 class="products-title">PRODUCTOS</h1>
     <section class="section-products">
       <div id="output-products">
-        <!--? DESPLIEGUE DE HBS -->
+        <!--* DESPLIEGUE DE HBS -->
       </div>
     </section>
 
-    <!--? CHAT -->
+    <!--* CHAT -->
 
     <div id="chat-container">
       <div id="chat-window">
         <div id="output"></div>
         <div id="actions"></div>
       </div>
-      <input type="email" id="username" placeholder="user@email.com" required />
-      <input type="text" id="message" placeholder="Message" required />
+      <div id="chat-user-data">
+        <input type="email" id="username" placeholder="user@email.com" />
+        <div>
+          <input type="text" id="name" placeholder="name" />
+          <input type="text" id="lastname" placeholder="lastname" />
+        </div>
+        <input type="number" id="age" placeholder="age" />
+        <input type="text" id="alias" placeholder="alias" />
+        <input type="text" id="avatar" placeholder="avatar" />
+      </div>
+      <input type="text" id="message" placeholder="Message" />
       <button id="send">Enviar</button>
     </div>
 
-    <!-- ? SCRIPTS -->
+    <!-- * SCRIPTS -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
     <script src="socket.io/socket.io.min.js"></script>
     <script src="form.products.js"></script>
