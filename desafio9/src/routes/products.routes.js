@@ -6,7 +6,6 @@ import completedFields from "../libs/middlewares.js";
 //? PRODUCTS
 
 router.get("/", controller.getAll);
-router.get("-test", controller.fakerTest);
 router.get("/:id", controller.getById);
 router.post("/", completedFields, controller.post);
 router.put("/:id", completedFields, controller.put);

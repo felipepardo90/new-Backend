@@ -6,13 +6,13 @@ const server = http.createServer(app);
 const io = new WebSocketServer(server);
 //! DATABASE
 import MySQLConn from "./DB/mysql/connection.js";
-import SQLiteConn from "./DB/sqlite/connection.js"
+// import SQLiteConn from "./DB/sqlite/connection.js"
 //! CONTENEDOR PRODUCTOS
 import Container from "./models/Container.js";
 const DBprod = new Container(MySQLConn, "Products");
 //! CONTENEDOR MENSAJES
 import Messages from "./models/Chat.js";
-const DBmsg = new Messages(SQLiteConn, "Messages");
+const DBmsg = new Messages("chat");
 //! STARTING SERVER
 
 server.listen(app.get("port"), () => {

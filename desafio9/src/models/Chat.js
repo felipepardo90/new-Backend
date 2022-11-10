@@ -1,15 +1,18 @@
-import knex from "knex";
+import fs from "fs";
 
 export default class Messages {
-  constructor(config, table) {
-    this.knex = knex(config);
-    this.table = table;
+  constructor(file) {
+    this.file = `./desafio9/src/db/files/${file}.json`;
   }
 
   async saveMessage(object) {
     try {
-      await this.knex.insert(object).into(this.table);
-      return await this.knex.select("*").from(this.table);
+      const messagesToParse = await fs.promises.readFile(this.file, "utf-8");
+      let messages = JSON.parse(messagesToParse);
+      messages.push(object);
+      const updatedFile = JSON.stringify(messages, null, " ");
+      await fs.promises.writeFile(this.file, updatedFile);
+      return messages;
     } catch (error) {
       console.error(`Se produjo un error en saveMessage:${error}`);
     }
@@ -17,9 +20,11 @@ export default class Messages {
 
   async readMessages() {
     try {
-      return await this.knex.select("*").from(this.table);
+      const messagesToParse = await fs.promises.readFile(this.file, "utf-8");
+      let messages = JSON.parse(messagesToParse);
+      return messages;
     } catch (error) {
-      console.error(`Se produjo un error en readMessages:${error}`);
+      console.error(`Se produjo un error en readMessages: ${error}`);
     }
   }
 }

@@ -52,12 +52,4 @@ controller.delete = async (req, res) => {
     : res.status(404).send({ message: "No se ha encontrado el producto" });
 };
 
-//* FAKER
-import { faker } from "@faker-js/faker";
-faker.locale = "es_MX";
-
-controller.fakerTest = (req, res) =>{
-res.render("faker")
-}
-
 export default controller
