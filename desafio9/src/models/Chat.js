@@ -9,9 +9,11 @@ export default class Messages {
     try {
       const messagesToParse = await fs.promises.readFile(this.file, "utf-8");
       let messages = JSON.parse(messagesToParse);
+      object.id = messages.length + 1;
       messages.push(object);
       const updatedFile = JSON.stringify(messages, null, " ");
       await fs.promises.writeFile(this.file, updatedFile);
+
       return messages;
     } catch (error) {
       console.error(`Se produjo un error en saveMessage:${error}`);
@@ -22,6 +24,7 @@ export default class Messages {
     try {
       const messagesToParse = await fs.promises.readFile(this.file, "utf-8");
       let messages = JSON.parse(messagesToParse);
+      console.log(messages, "read messages");
       return messages;
     } catch (error) {
       console.error(`Se produjo un error en readMessages: ${error}`);
