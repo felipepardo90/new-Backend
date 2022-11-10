@@ -1,11 +1,12 @@
 import { faker } from "@faker-js/faker";
 faker.locale = "es_MX";
-const { name, internet } = faker;
-let info = [];
-for (let index = 1; index <= 20; index++) {
-  info.push({
-    nombre: `${name.firstName()} ${name.lastName()}`,
-    email: internet.email(),
+const { image, commerce } = faker;
+let product = [];
+for (let i = 1; i <= 5; i++) {
+  product.push({
+    title: `${faker.commerce.productName()}`,
+    price: `${faker.commerce.price(100, 500)}`,
+    thumbnail: `${faker.image.imageUrl()} `,
   });
 }
-console.table(info);
+console.log(product);
