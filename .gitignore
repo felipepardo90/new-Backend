@@ -5,9 +5,9 @@ pruebas.js
 
 # clean caché 
 
-git rm -r --cached .
-git add .
-git commit -m "fixed untracked files" 
+# git rm -r --cached .
+# git add .
+# git commit -m "fixed untracked files" 
 
 desafio1
 desafio2
