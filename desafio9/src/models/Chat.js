@@ -24,7 +24,6 @@ export default class Messages {
     try {
       const messagesToParse = await fs.promises.readFile(this.file, "utf-8");
       let messages = JSON.parse(messagesToParse);
-      console.log(messages, "read messages");
       return messages;
     } catch (error) {
       console.error(`Se produjo un error en readMessages: ${error}`);
