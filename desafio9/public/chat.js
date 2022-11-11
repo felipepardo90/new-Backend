@@ -13,44 +13,53 @@ let actions = document.getElementById("actions");
 
 //! NORMALIZE
 
-import { normalize, schema } from "normalizr";
-import util from "util";
+// import { normalize, schema } from "normalizr"; //TODO ASi se trae el normalize???
+// import util from "util";
 
-const arrayMessages = [
-  {
-    id: "1",
-    author: {
-      id: email.value,
-      name: name.value,
-      lastname: lastname.value,
-      age: age.value,
-      alias: alias.value,
-      avatar: avatar.value,
-    },
-    text: message.value,
-  },
-];
+// const authorSchema = new schema.Entity("authors");
+// const messageSchema = new schema.Entity("messages");
+// const postSchema = new schema.Entity("posts", {
+//   author: authorSchema,
+//   text: [messageSchema],
+// });
 
-const authorSchema = new schema.Entity("authors");
-const messageSchema = new schema.Entity("messages");
-const postSchema = new schema.Entity("posts", {
-  author: authorSchema,
-  text: [messageSchema],
-});
-
-const arrNorm = normalize(arrayMessages, postSchema);
-console.log(arrNorm)
+// const arrNorm = normalize(arrayMessages, postSchema);
+// console.log(arrNorm);
 
 //! Al cliquear en SEND, se enviará un mensaje al servidor con el evento chat:message, y luego se limpiará el input message
 
 btn.addEventListener("click", () => {
-  socket.emit("chat:message", {
-    // username: username.value,
-    // message: message.value,
-    ...arrNorm,
-    date: new Date().toLocaleString(),
-  });
-  // message.value = "";
+  //TODO ver de normalizar
+  const data = {
+    id: "1",
+    messages: [
+      {
+        author: {
+          id: email.value,
+          name: name.value,
+          lastname: lastname.value,
+          age: age.value,
+          alias: alias.value,
+          avatar: avatar.value,
+        },
+        text: message.value,
+        date: new Date().toLocaleString(),
+      },
+    ],
+  };
+
+
+
+  socket.emit(
+    "chat:message",
+    data
+    // {
+    //   // username: username.value,
+    //   // message: message.value,
+    //   date: new Date().toLocaleString(),
+    // }
+  );
+  message.value = "";
   message.focus();
   return false;
 });
