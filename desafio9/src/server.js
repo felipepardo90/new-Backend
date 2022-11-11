@@ -53,6 +53,7 @@ io.on("connection", async (socket) => {
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
   socket.on("chat:message", async (data) => {
+    console.log(data, "data on server backend")
     const allMessages = await DBmsg.saveMessage(data);
     io.sockets.emit("chat:history", allMessages);
   });
