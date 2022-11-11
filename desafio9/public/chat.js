@@ -1,21 +1,57 @@
 //!  DOM ELEMENTS
 
 let message = document.getElementById("message");
-let username = document.getElementById("username");
+let email = document.getElementById("email");
+let name = document.getElementById("name");
+let lastname = document.getElementById("lastname");
+let age = document.getElementById("age");
+let alias = document.getElementById("alias");
+let avatar = document.getElementById("avatar");
 let btn = document.getElementById("send");
 let output = document.getElementById("output");
 let actions = document.getElementById("actions");
+
+//! NORMALIZE
+
+import { normalize, schema } from "normalizr";
+import util from "util";
+
+const arrayMessages = [
+  {
+    id: "1",
+    author: {
+      id: email.value,
+      name: name.value,
+      lastname: lastname.value,
+      age: age.value,
+      alias: alias.value,
+      avatar: avatar.value,
+    },
+    text: message.value,
+  },
+];
+
+const authorSchema = new schema.Entity("authors");
+const messageSchema = new schema.Entity("messages");
+const postSchema = new schema.Entity("posts", {
+  author: authorSchema,
+  text: [messageSchema],
+});
+
+const arrNorm = normalize(arrayMessages, postSchema);
+console.log(arrNorm)
 
 //! Al cliquear en SEND, se enviará un mensaje al servidor con el evento chat:message, y luego se limpiará el input message
 
 btn.addEventListener("click", () => {
   socket.emit("chat:message", {
-    username: username.value,
-    message: message.value,
-    date: new Date().toLocaleString()
+    // username: username.value,
+    // message: message.value,
+    ...arrNorm,
+    date: new Date().toLocaleString(),
   });
-  message.value = "";
-  message.focus()
+  // message.value = "";
+  message.focus();
   return false;
 });
 
@@ -33,15 +69,11 @@ socket.on("chat:history", (data) => {
     .map(
       (user) =>
         `<p>
-    <strong class="message-user">${
-      user.username
-    } <span class="message-date">[ ${user.date} ]</span></strong>: <span class="message-txt">${
-          user.message
-        }</span>
+    <strong class="message-user">${user.username} <span class="message-date">[ ${user.date} ]</span></strong>: <span class="message-txt">${user.message}</span>
     </p>`
     )
     .join(" ");
-    return false
+  return false;
 });
 
 //! "Está escribiendo..."

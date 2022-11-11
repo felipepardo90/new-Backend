@@ -80,7 +80,7 @@
         <div id="actions"></div>
       </div>
       <div id="chat-user-data">
-        <input type="email" id="username" placeholder="user@email.com" />
+        <input type="email" id="email" placeholder="user@email.com" />
         <div>
           <input type="text" id="name" placeholder="name" />
           <input type="text" id="lastname" placeholder="lastname" />
@@ -96,8 +96,9 @@
     <!-- * SCRIPTS -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
     <script src="socket.io/socket.io.min.js"></script>
     <script src="form.products.js"></script>
-    <script src="chat.js"></script>
+    <script src="chat.js" type="module"></script>
   </body>
 </html>
