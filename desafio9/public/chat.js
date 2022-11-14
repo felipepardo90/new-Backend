@@ -15,6 +15,7 @@ let actions = document.getElementById("actions");
 
 btn.addEventListener("click", () => {
   const messages = {
+    id: 1000,
     author: {
       id: email.value,
       name: name.value,
@@ -27,7 +28,7 @@ btn.addEventListener("click", () => {
     date: new Date().toLocaleString(),
   };
 
-  socket.emit("chat:message", data); // TODO CHAT MESSAGE FRONT
+  socket.emit("chat:message", messages); // TODO CHAT MESSAGE FRONT
   message.value = "";
   message.focus();
   return false;
@@ -61,3 +62,41 @@ socket.on("chat:history", (data) => {
 socket.on("chat:typing", (data) => {
   actions.innerHTML = `<p></em>${data} Está escribiendo... </p>`;
 });
+
+/*
+const authorSchema = new schema.Entity("authors");
+const commentsSchema = new schema.Entity("comments", {
+  commenter: authorSchema,
+});
+const posts = new schema.Entity("posts", {
+  author: authorSchema,
+  messages: [commentsSchema],
+});
+const messages = new schema.Entity("messages", {
+  messages: [posts],
+});
+
+const normalizedMsg = normalize(data, messages);
+
+console.log("NORMALIZED", normalizedMsg, "NORMALIZED");
+console.log("INSPECT", util.inspect(normalizedMsg, false, 7, true), "INSPECT");
+
+const denormalizedMsg = denormalize(
+  normalizedMsg.result,
+  messages,
+  normalizedMsg.entities
+);
+
+console.log("DENORMALIZED", denormalizedMsg, "DENORMALIZED");
+console.log(
+  "INSPECT",
+  util.inspect(denormalizedMsg, false, 7, true),
+  "INSPECT"
+);
+
+const filterMsg = messagesDatabase.filter(({messages}) => messages);
+const filterInArray = filterMsg.map(
+  (i) => ` AUTOR >> ${i.messages[0].author.alias}; MENSAJE >> ${i.messages[0].text}`
+);
+console.log(util.inspect(filterInArray, false, 6, true));
+*/
