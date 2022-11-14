@@ -1,4 +1,6 @@
 import app from "./app.js";
+//! NORMALIZE
+import { normalize, schema } from "normalizr";
 //! WEBSOCKETS
 import { Server as WebSocketServer } from "socket.io";
 import http from "http";
@@ -52,15 +54,31 @@ io.on("connection", async (socket) => {
 
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
-  socket.on("chat:message", async (data) => { //TODO CHAT MESSAGE BACK
-    console.log(data, "data on server backend")
-    const allMessages = await DBmsg.saveMessage(data);
+  socket.on("chat:message", async (data) => {
+    //TODO CHAT MESSAGE BACK
+
+    const authorSchema = new schema.Entity("authors");
+    const commentsSchema = new schema.Entity("comments", {
+      commenter: authorSchema,
+    });
+    const posts = new schema.Entity("posts", {
+      author: authorSchema,
+      messages: [commentsSchema],
+    });
+    const messages = new schema.Entity("messages", {
+      messages: [posts],
+    });
+
+    const normalizedMsg = normalize(data, messages);
+
+    const allMessages = await DBmsg.saveMessage(normalizedMsg);
     io.sockets.emit("chat:history", allMessages);
   });
 
   //! Se escucha el evento chat:typing y se emite un mensaje a todos los sockets conectados, excepto al que "está escribiendo..." con el método broadcast
 
-  socket.on("chat:typing", (data) => { // TODO CHAT TYPING BACK
+  socket.on("chat:typing", (data) => {
+    // TODO CHAT TYPING BACK
     socket.broadcast.emit("chat:typing", data);
   });
 });
