@@ -1,5 +1,7 @@
 //!  DOM ELEMENTS
 
+import { normalize, schema } from "normalizr"
+
 let message = document.getElementById("message");
 let email = document.getElementById("email");
 let name = document.getElementById("name");
@@ -15,21 +17,13 @@ let actions = document.getElementById("actions");
 
 // import { normalize, schema } from "normalizr"; //TODO ASi se trae el normalize???
 // import util from "util";
-
-// const authorSchema = new schema.Entity("authors");
-// const messageSchema = new schema.Entity("messages");
-// const postSchema = new schema.Entity("posts", {
-//   author: authorSchema,
-//   text: [messageSchema],
-// });
-
-// const arrNorm = normalize(arrayMessages, postSchema);
 // console.log(arrNorm);
 
 //! Al cliquear en SEND, se enviará un mensaje al servidor con el evento chat:message, y luego se limpiará el input message
 
 btn.addEventListener("click", () => {
   //TODO ver de normalizar
+  
   const data = {
     id: "1",
     messages: [
@@ -48,16 +42,18 @@ btn.addEventListener("click", () => {
     ],
   };
 
-
+  const authorSchema = new schema.Entity()
+  const messageSchema = new schema.Entity("messages");
+  const postSchema = new schema.Entity("posts", {
+    authors: authorSchema,
+    text: [messageSchema],
+  });
+  
+  const arrNorm = normalize(data, postSchema);
 
   socket.emit(
     "chat:message",
-    data
-    // {
-    //   // username: username.value,
-    //   // message: message.value,
-    //   date: new Date().toLocaleString(),
-    // }
+    arrNorm
   );
   message.value = "";
   message.focus();
