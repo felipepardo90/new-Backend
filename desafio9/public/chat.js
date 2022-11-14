@@ -1,7 +1,5 @@
 //!  DOM ELEMENTS
 
-import { normalize, schema } from "normalizr"
-
 let message = document.getElementById("message");
 let email = document.getElementById("email");
 let name = document.getElementById("name");
@@ -12,12 +10,6 @@ let avatar = document.getElementById("avatar");
 let btn = document.getElementById("send");
 let output = document.getElementById("output");
 let actions = document.getElementById("actions");
-
-//! NORMALIZE
-
-// import { normalize, schema } from "normalizr"; //TODO ASi se trae el normalize???
-// import util from "util";
-// console.log(arrNorm);
 
 //! Al cliquear en SEND, se enviará un mensaje al servidor con el evento chat:message, y luego se limpiará el input message
 
