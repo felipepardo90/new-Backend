@@ -48,11 +48,11 @@ io.on("connection", async (socket) => {
 
   //! El evento chat:messages iniciará enviando el array existente al cliente
   const allMessages = await DBmsg.readMessages();
-  socket.emit("chat:history", allMessages);
+  socket.emit("chat:history", allMessages); //TODO CHAT HISTORY BACK
 
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
-  socket.on("chat:message", async (data) => {
+  socket.on("chat:message", async (data) => { //TODO CHAT MESSAGE BACK
     console.log(data, "data on server backend")
     const allMessages = await DBmsg.saveMessage(data);
     io.sockets.emit("chat:history", allMessages);
@@ -60,7 +60,7 @@ io.on("connection", async (socket) => {
 
   //! Se escucha el evento chat:typing y se emite un mensaje a todos los sockets conectados, excepto al que "está escribiendo..." con el método broadcast
 
-  socket.on("chat:typing", (data) => {
+  socket.on("chat:typing", (data) => { // TODO CHAT TYPING BACK
     socket.broadcast.emit("chat:typing", data);
   });
 });
