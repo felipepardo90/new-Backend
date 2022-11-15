@@ -1,6 +1,24 @@
 import app from "./app.js";
 //! NORMALIZE
 import { normalize, schema } from "normalizr";
+
+const authorSchema = new schema.Entity("authors");
+const commentsSchema = new schema.Entity("comments", {
+  commenter: authorSchema,
+});
+const posts = new schema.Entity("posts", {
+  author: authorSchema,
+  messages: [commentsSchema],
+});
+const messages = new schema.Entity("messages", {
+  authors:authorSchema,
+  messages: [posts],
+});
+
+
+
+// const denormalizedMsg = denormalize(normObj.result, messages, normObj.entities) //! DENORMALIZE
+
 //! WEBSOCKETS
 import { Server as WebSocketServer } from "socket.io";
 import http from "http";
@@ -55,21 +73,9 @@ io.on("connection", async (socket) => {
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
   socket.on("chat:message", async (data) => {
-    //TODO CHAT MESSAGE BACK
-
-    const authorSchema = new schema.Entity("authors");
-    const commentsSchema = new schema.Entity("comments", {
-      commenter: authorSchema,
-    });
-    const posts = new schema.Entity("posts", {
-      author: authorSchema,
-      messages: [commentsSchema],
-    });
-    const messages = new schema.Entity("messages", {
-      messages: [posts],
-    });
-
+    console.log(normalize(data, messages))
     const normalizedMsg = normalize(data, messages);
+    //TODO CHAT MESSAGE BACK
 
     const allMessages = await DBmsg.saveMessage(normalizedMsg);
     io.sockets.emit("chat:history", allMessages);
