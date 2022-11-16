@@ -11,11 +11,28 @@ let btn = document.getElementById("send");
 let output = document.getElementById("output");
 let actions = document.getElementById("actions");
 
+//! Normalize Schema
+
+const authorSchema = new schema.Entity("authors");
+const commentsSchema = new schema.Entity(
+  "comments",
+  {
+    commenter: authorSchema,
+  },
+  { idAttribute: 1 }
+);
+const posts = new schema.Entity("posts", {
+  author: authorSchema,
+  messages: [commentsSchema],
+});
+const messagesSchema = new schema.Entity("messages", {
+  messages: [posts],
+});
+
 //! Al cliquear en SEND, se enviará un mensaje al servidor con el evento chat:message, y luego se limpiará el input message
 
 btn.addEventListener("click", () => {
   const messages = {
-    id: "1",
     author: {
       id: email.value,
       name: name.value,
@@ -28,7 +45,7 @@ btn.addEventListener("click", () => {
     date: new Date().toLocaleString(),
   };
 
-  socket.emit("chat:message", messages); // TODO CHAT MESSAGE FRONT
+  socket.emit("chat:message", messages); 
   message.value = "";
   message.focus();
   return false;
@@ -44,19 +61,15 @@ message.addEventListener("keypress", () => {
 //! Luego de enviar mensaje por el chat, se limpiará el actions (muestra el evento chat:typing) y se renderizará el chat, obteniendo por data un Array de mensajes con el evento chat:messages
 
 socket.on("chat:history", (data) => {
-  const messages = new normalize.schema.Entity("messages", {
-    author: authorSchema,
-    messages: [commentsSchema],
-  });
   const denormalizedMsg = normalize.denormalize(
     data.result,
-    messages,
+    messagesSchema,
     data.entities
   );
-  console.log(denormalizedMsg);
+  console.log(denormalizedMsg, "FRONT")
   // TODO CHAT HISTORY FRONT
   actions.innerHTML = " ";
-  output.innerHTML = data
+  output.innerHTML = denormalizedMsg
     .map(
       (user) =>
         `<p>
