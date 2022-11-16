@@ -15,7 +15,7 @@ let actions = document.getElementById("actions");
 
 btn.addEventListener("click", () => {
   const messages = {
-    id: 1000,
+    id: "1",
     author: {
       id: email.value,
       name: name.value,
@@ -44,6 +44,16 @@ message.addEventListener("keypress", () => {
 //! Luego de enviar mensaje por el chat, se limpiará el actions (muestra el evento chat:typing) y se renderizará el chat, obteniendo por data un Array de mensajes con el evento chat:messages
 
 socket.on("chat:history", (data) => {
+  const messages = new normalize.schema.Entity("messages", {
+    author: authorSchema,
+    messages: [commentsSchema],
+  });
+  const denormalizedMsg = normalize.denormalize(
+    data.result,
+    messages,
+    data.entities
+  );
+  console.log(denormalizedMsg);
   // TODO CHAT HISTORY FRONT
   actions.innerHTML = " ";
   output.innerHTML = data
