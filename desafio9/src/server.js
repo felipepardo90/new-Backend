@@ -1,21 +1,13 @@
 import app from "./app.js";
 //! NORMALIZE
 import { normalize, schema } from "normalizr";
+import util from "util"
 
 const authorSchema = new schema.Entity("authors");
-const commentsSchema = new schema.Entity("comments", {
-  commenter: authorSchema,
-});
-const posts = new schema.Entity("posts", {
-  author: authorSchema,
-  messages: [commentsSchema],
-});
+
 const messages = new schema.Entity("messages", {
-  authors:authorSchema,
-  messages: [posts],
+  author:authorSchema
 });
-
-
 
 // const denormalizedMsg = denormalize(normObj.result, messages, normObj.entities) //! DENORMALIZE
 
@@ -68,17 +60,16 @@ io.on("connection", async (socket) => {
 
   //! El evento chat:messages iniciará enviando el array existente al cliente
   const allMessages = await DBmsg.readMessages();
-  socket.emit("chat:history", allMessages); //TODO CHAT HISTORY BACK
+  const normalizedMsg = normalize(allMessages, messages);
+  console.log("NORMAL |Í", util.inspect(normalizedMsg, false, 8, true), "NORMAL |Í")
+  socket.emit("chat:history", normalizedMsg); //TODO CHAT HISTORY BACK
 
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
   socket.on("chat:message", async (data) => {
-    console.log(normalize(data, messages))
-    const normalizedMsg = normalize(data, messages);
     //TODO CHAT MESSAGE BACK
-
-    const allMessages = await DBmsg.saveMessage(normalizedMsg);
-    io.sockets.emit("chat:history", allMessages);
+    await DBmsg.saveMessage(data);
+    io.sockets.emit("chat:history", normalizedMsg);
   });
 
   //! Se escucha el evento chat:typing y se emite un mensaje a todos los sockets conectados, excepto al que "está escribiendo..." con el método broadcast
