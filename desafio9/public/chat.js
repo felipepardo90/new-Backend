@@ -13,19 +13,19 @@ let actions = document.getElementById("actions");
 
 //! Normalize Schema
 
-const authorSchema = new schema.Entity("authors");
-const commentsSchema = new schema.Entity(
+const authorSchema = new normalizr.schema.Entity("authors");
+const commentsSchema = new normalizr.schema.Entity(
   "comments",
   {
     commenter: authorSchema,
   },
   { idAttribute: 1 }
 );
-const posts = new schema.Entity("posts", {
+const posts = new normalizr.schema.Entity("posts", {
   author: authorSchema,
   messages: [commentsSchema],
 });
-const messagesSchema = new schema.Entity("messages", {
+const messagesSchema = new normalizr.schema.Entity("messages", {
   messages: [posts],
 });
 
@@ -55,18 +55,18 @@ btn.addEventListener("click", () => {
 
 message.addEventListener("keypress", () => {
   //TODO CHAT TYPING FRONT
-  socket.emit("chat:typing", username.value);
+  socket.emit("chat:typing", alias.value);
 });
 
 //! Luego de enviar mensaje por el chat, se limpiará el actions (muestra el evento chat:typing) y se renderizará el chat, obteniendo por data un Array de mensajes con el evento chat:messages
 
 socket.on("chat:history", (data) => {
-  const denormalizedMsg = normalize.denormalize(
+  
+  const denormalizedMsg = normalizr.denormalize(
     data.result,
     messagesSchema,
     data.entities
   );
-  console.log(denormalizedMsg, "FRONT")
   // TODO CHAT HISTORY FRONT
   actions.innerHTML = " ";
   output.innerHTML = denormalizedMsg

@@ -1,7 +1,7 @@
 import app from "./app.js";
 //! NORMALIZE
 import { normalize, schema, denormalize } from "normalizr";
-import util from "util"
+import util from "util";
 
 const authorSchema = new schema.Entity("authors");
 const commentsSchema = new schema.Entity(
@@ -68,13 +68,13 @@ io.on("connection", async (socket) => {
 
   //! El evento chat:messages iniciará enviando el array existente al cliente
   const allMessages = await DBmsg.readMessages();
-  const normalizedMsg = normalize(allMessages, messages)
+  const normalizedMsg = normalize(allMessages, messages);
   socket.emit("chat:history", normalizedMsg); //TODO CHAT HISTORY BACK
 
   //! Se escucha el evento chat:message, se guarda el mensaje recibido por el cliente y se emite un mensaje general con el array Messages actualizado a todos los sockets conectados y por conectarse
 
   socket.on("chat:message", async (data) => {
-    const messagesFront = {messages:[data]}
+    const messagesFront = { id: "messages", messages: [data] };
     await DBmsg.saveMessage(messagesFront);
     io.sockets.emit("chat:history", normalizedMsg);
   });
