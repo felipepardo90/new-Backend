@@ -144,9 +144,6 @@ body {
   width: 90%;
   background-color: yellow;
 }
-#chat-container #chat-user-data input {
-  background-color: yellow;
-}
 
 #chat-window {
   background-color: white;

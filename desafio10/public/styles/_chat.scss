@@ -7,9 +7,6 @@
   margin: 30px auto;
   width: 90%;
   background-color: yellow;
-  #chat-user-data input {
-    background-color: yellow;
-  }
 }
 
 #chat-window {
@@ -29,7 +26,7 @@
     .message-user {
       color: blue;
     }
-    .message-date {
+    .message-date{
       color: brown;
     }
     .message-txt {
