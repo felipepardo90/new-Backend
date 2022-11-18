@@ -4,7 +4,8 @@
 <body>
   <main>
     <div>
-      <h1>Formulario para ingresar productos</h1>
+      <h1>Bienvenido <%= user.name %></h1>
+      <a href="/logout">Cerrar sesión</a>
       <br />
     </div>
     <form class="form" id="products-form" action="api/products" method="POST">
