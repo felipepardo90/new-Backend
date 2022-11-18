@@ -6,6 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+import * as dotenv from "dotenv";
 
 const app = express();
 
@@ -38,7 +39,7 @@ app.use(session({
         maxAge: 10 * 1000 * 60,
     },
     store:MongoStore.create({
-        mongoUrl:'mongodb+srv://Felipao:b7a4jdULJwFxQc8K@codercluster.exshfro.mongodb.net/?retryWrites=true&w=majority',
+        mongoUrl:`mongodb+srv://${process.env.USER}:${process.env.PASS}@codercluster.exshfro.mongodb.net/?retryWrites=true&w=majority`,
         mongoOptions
     })
 }))
