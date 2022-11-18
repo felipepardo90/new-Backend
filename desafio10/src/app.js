@@ -1,16 +1,17 @@
 import express from "express";
 import session from "express-session";
+//* Mongo Connect
 import MongoStore from "connect-mongo"
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import * as dotenv from "dotenv";
-
+dotenv.config()
 const app = express();
 
-import morgan from "morgan";
 
 
 //! ROUTES
@@ -19,7 +20,7 @@ import indexRoute from "./routes/index.routes.js";
 
 //! SETTINGS
 
-app.set("port", 8080); //! CONFIG port
+app.set("port", process.env.PORT); //! CONFIG port
 app.set("json spaces", 2); //! JSON formatter
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs"); //! VIEW ENGINES
