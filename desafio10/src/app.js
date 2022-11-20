@@ -1,16 +1,15 @@
 import express from "express";
 import session from "express-session";
-import MongoStore from "connect-mongo"
+import MongoStore from "connect-mongo";
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+import bodyParser from "body-parser";
+import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-
-import morgan from "morgan";
-
 
 //! ROUTES
 
@@ -25,22 +24,26 @@ app.set("view engine", "ejs"); //! VIEW ENGINES
 
 //! MIDDLEWARES
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use("/", express.static(path.join(__dirname, "../public"))); //! STATIC FILES
 app.use("/", indexRoute); //
-app.use(session({
-    secret:'12341felipao512313',
-    resave: 'false',
+app.use(
+  session({
+    secret: "12341felipao512313",
+    resave: "false",
     saveUninitialized: false,
     cookie: {
-        maxAge: 10 * 1000 * 60,
+      maxAge: 10 * 1000 * 60,
     },
-    store:MongoStore.create({
-        mongoUrl:'mongodb+srv://Felipao:b7a4jdULJwFxQc8K@codercluster.exshfro.mongodb.net/?retryWrites=true&w=majority',
-        mongoOptions
-    })
-}))
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://Felipao:b7a4jdULJwFxQc8K@codercluster.exshfro.mongodb.net/?retryWrites=true&w=majority",
+      mongoOptions,
+    }),
+  })
+);
 
 export default app;
