@@ -31,7 +31,7 @@ app.use("/", express.static(path.join(__dirname, "../public"))); //! STATIC FILE
 app.use("/", indexRoute); //
 app.use(
   session({
-    secret: "12341felipao512313",
+    secret: "12345",
     store: MongoStore.create({
       mongoUrl: MONGODB_URI,
       mongoOptions,
@@ -43,5 +43,25 @@ app.use(
     },
   })
 );
+
+//* PRUEBAS
+
+// app.get("/", (req, res) => {
+//   req.session.user ? res.render("index") : res.render("login");
+// });
+
+// app.post("/", (req, res) => {
+//   const { user } = req.body;
+//   req.session.user = user;
+//   res.redirect("/");
+// });
+// // app.post("/register");
+// app.get("/logout", (req, res) => {
+//   req.session.destroy((err) => {
+//     res.redirect("/");
+//   });
+// });
+
+//*
 
 export default app;
