@@ -1,11 +1,7 @@
 const controller = {};
 
-const user = {
-  name: "Felipao",
-};
-
 controller.index = (req, res) => {
-  req.session.user ? res.render("index", { user: user }) : res.render("login");
+  req.session.user ? res.render("index") : res.render("login");
 };
 
 controller.post = (req, res) => {

@@ -5,11 +5,10 @@ import controller from "../controllers/index.controller.js"
 
 
 //? INDEX
+router.use("/api/products", productsRoute);
 router.get("/", controller.index)
 router.post("/", controller.post)
-router.use("/api/products", productsRoute);
 router.post("/register");
-router.get("/login", controller.post);
 router.get("/logout", (req, res)=>{
     req.session.destroy((err)=>{
         res.redirect("/")
