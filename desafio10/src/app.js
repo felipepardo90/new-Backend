@@ -1,5 +1,6 @@
 import express from "express";
 import session from "express-session";
+import passport from "passport"
 //* Mongo Connect
 import MongoStore from "connect-mongo";
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
@@ -8,7 +9,10 @@ import bodyParser from "body-parser";
 import path from "path";
 import morgan from "morgan";
 
+//! Initializatión
+
 const app = express();
+// import passportAuth from "./passport/local.auth.js"
 
 //! ROUTES
 
@@ -23,26 +27,27 @@ app.set("view engine", "ejs"); //! VIEW ENGINES
 
 //! MIDDLEWARES
 
+app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(morgan("dev"));
 app.use("/", express.static(path.join(__dirname, "../public"))); //! STATIC FILES
 app.use("/", indexRoute); //
-app.use(
-  session({
-    secret: "12345",
-    store: MongoStore.create({
-      mongoUrl: MONGODB_URI,
-      mongoOptions,
-    }),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 10 * 1000 * 60,
-    },
-  })
+app.use(session({
+  secret: "12345",
+  store: MongoStore.create({
+    mongoUrl: MONGODB_URI,
+    mongoOptions,
+  }),
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 10 * 1000 * 60,
+  },
+})
 );
+app.use(passport.initialize())
+app.use(passport.session())
 
 //* PRUEBAS
 
