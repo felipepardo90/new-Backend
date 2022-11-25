@@ -23,8 +23,8 @@ passport.use(
       const newUser = new User();
       newUser.email = email;
       newUser.password = newUser.encryptPass(password);
-      await user.save();
-      done(null, user);
+      await newUser.save();
+      done(null, newUser);
     }
   )
 );
