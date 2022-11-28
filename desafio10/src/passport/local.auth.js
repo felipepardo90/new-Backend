@@ -20,6 +20,11 @@ passport.use(
       passReqToCallbacks: true,
     },
     async (req, email, password, done) => {
+      const newUser = new User();
+      newUser.email = email;
+      newUser.password = newUser.encryptPass(password);
+      await newUser.save();
+      done(null, newUser);
       try {
         const newUser = new User();
         console.log(newUser)
