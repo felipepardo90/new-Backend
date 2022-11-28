@@ -3,7 +3,6 @@ import session from "express-session";
 import passport from "passport"
 //* Mongo Connect
 import MongoStore from "connect-mongo";
-const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 import { MONGODB_URI, PORT, __dirname } from "./config.js";
 import bodyParser from "body-parser";
 import path from "path";
@@ -12,7 +11,7 @@ import morgan from "morgan";
 //! Initializatión
 
 const app = express();
-// import passportAuth from "./passport/local.auth.js"
+const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
 //! ROUTES
 

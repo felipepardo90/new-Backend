@@ -3,8 +3,8 @@ import bcrypt from "bcrypt";
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  email: { String, required: true },
-  password: { String, required: true },
+  email: String,
+  password: String,
 });
 
 userSchema.methods.encryptPass = (password) => {

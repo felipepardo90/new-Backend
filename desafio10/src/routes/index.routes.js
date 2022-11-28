@@ -4,15 +4,13 @@ import productsRoute from "./products.routes.js";
 import passport from "passport";
 import controller from "../controllers/index.controller.js";
 
-let user = {
-  name: "Fabiola",
-};
+
 
 //? INDEX
 router.use("/api/products", productsRoute);
 // router.get("/", controller.index)
 router.get("/", (req, res, next) => {
-  res.render("index", { user });
+  res.render("index");
 });
 
 router.get("/signup", (req, res, next) => {
@@ -28,8 +26,19 @@ router.post(
   })
 );
 
-router.get("/signin", (req, res, next) => {});
+router.get("/signin", (req, res, next) => {
+  res.render("signin")
+});
 
-router.post("/signin", (req, res, next) => {});
+router.post('/signin', passport.authenticate('local-signin', {
+  successRedirect: '/profile',
+  failureRedirect: '/signin',
+  failureFlash: true
+}));
+
+router.get("/logout", (req, res, next)=>{
+  req.logout()
+  res.redirect("/")
+})
 
 export default router;

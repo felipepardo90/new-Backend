@@ -1,5 +1,5 @@
 import passport from "passport";
-import LocalStrategy from "passport-local";
+import { Strategy } from "passport-local";
 import User from "../models/Users.js";
 
 passport.serializeUser((user, done) => {
@@ -7,24 +7,30 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  await User.findById(id);
+  const user = await User.findById(id);
   done(null, user);
 });
 
 passport.use(
   "local-signup",
-  new LocalStrategy(
+  new Strategy(
     {
       usernameField: "email",
       passwordField: "password",
       passReqToCallbacks: true,
     },
     async (req, email, password, done) => {
-      const newUser = new User();
-      newUser.email = email;
-      newUser.password = newUser.encryptPass(password);
-      await user.save();
-      done(null, user);
+      try {
+        const newUser = new User();
+        console.log(newUser)
+        newUser.email = email;
+        newUser.password = newUser.encryptPass(password);
+        await newUser.save();
+        done(null, newUser);
+        
+      } catch (error) {
+        console.log(error)
+      }
     }
   )
 );
