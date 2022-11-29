@@ -1,6 +1,7 @@
 import express from "express";
 import session from "express-session";
 import passport from "passport"
+import indexRoute from "./routes/index.routes.js";
 //* Mongo Connect
 import MongoStore from "connect-mongo";
 import { MONGODB_URI, PORT, __dirname } from "./config.js";
@@ -13,9 +14,6 @@ import morgan from "morgan";
 const app = express();
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
-//! ROUTES
-
-import indexRoute from "./routes/index.routes.js";
 
 //! SETTINGS
 
@@ -31,7 +29,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/", express.static(path.join(__dirname, "../public"))); //! STATIC FILES
-app.use("/", indexRoute); //
 app.use(session({
   secret: "12345",
   store: MongoStore.create({
@@ -41,10 +38,11 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 10 * 1000 * 60,
+    maxAge: 60000,
   },
 })
 );
+app.use("/", indexRoute); //
 app.use(passport.initialize())
 app.use(passport.session())
 
