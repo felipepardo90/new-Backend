@@ -9,8 +9,8 @@
     "url": "git+https://github.com/felipepardo90/new-Backend.git"
   },
   "scripts": {
-    "start": "node desafio10/src/server.js",
-    "dev": "nodemon desafio10/src/server.js"
+    "start": "node desafio12/src/server.js",
+    "dev": "nodemon desafio12/src/server.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
