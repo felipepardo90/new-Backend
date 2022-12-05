@@ -6,12 +6,10 @@ import controller from "../controllers/index.controller.js";
 
 //? INDEX
 router.use("/api/products", productsRoute);
-router.get("/", controller.index)
-// router.get("/", (req, res, next) => {
-//   res.render("index");
-// });
-
-
+// router.get("/", controller.index)
+router.get("/", (req, res, next) => {
+  res.render("index");
+});
 
 router.get("/login", (req, res) => {
   !req.session.name
@@ -23,11 +21,14 @@ router.get("/signup", (req, res, next) => {
   res.render("register");
 });
 
-router.post("/signup", (req, res) => {
-  const { user } = req.body;
-  req.session.user = user;
-  res.redirect("/");
-});
+router.post(
+  "/signup",
+  passport.authenticate("local-signup", {
+    successRedirect: "/",
+    failureRedirect: "/signup",
+    passReqToCallback: true,
+  })
+);
 
 router.get("/signin", (req, res, next) => {
   res.render("signin");
