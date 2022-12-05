@@ -1,21 +1,26 @@
-import Yargs from "yargs/yargs"
+import Yargs from "yargs/yargs";
+// const yargs = Yargs(process.argv.slice(2));
+// const result = yargs
+//   .alias({
+//     d: "entorno",
+//     n: "nombre",
+//   })
+//   .default({
+//     nombre: "default",
+//     entorno: "default",
+//   }).argv;
 
-const options = {
-  alias: { m: "modo", p: "port", d: "debug" },
-  default: {
-    modo: "prod",
-    port: "8080",
-    debug: false,
-  },
-};
+// const { nombre, entorno } = result;
+// console.log({ nombre, entorno });
 
-const argv = process.argv.slice(2);
+const yargs = Yargs(process.argv.slice(2));
+const result = yargs
+  .alias({
+    p: "port",
+  })
+  .default({
+    port: 8080,
+  }).argv;
 
-const result = Yargs(argv)
-
-const {modo, port, debug} = result
-.boolean("debug")
-.alias(options.alias)
-.default(options.default).argv
-
-console.log({nombre, entorno})
+const { port } = result;
+console.log({ port });
