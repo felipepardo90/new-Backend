@@ -4,7 +4,28 @@ import productsRoute from "./products.routes.js";
 import passport from "passport";
 import controller from "../controllers/index.controller.js";
 
-//? INDEX
+//! RUTAS SOLICITADAS
+router.get("/info", (req, res) => {
+  res.send({
+    info: {
+      "Input Arguments": process.argv.slice(2),
+      OS: process.platform,
+      "Node Version": process.version,
+      "Memory Usage": process.memoryUsage(),
+      "Execution Path": process.execPath,
+      "Process ID": process.pid,
+      "Current Working Directory": process.cwd(),
+    },
+  });
+});
+
+//? RANDOM
+
+router.get("/api/random", (req, res) => {
+  res.send("Random");
+});
+
+//!
 router.use("/api/products", productsRoute);
 // router.get("/", controller.index)
 router.get("/", (req, res, next) => {
