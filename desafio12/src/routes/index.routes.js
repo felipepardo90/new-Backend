@@ -11,7 +11,7 @@ router.get("/info", (req, res) => {
       "Input Arguments": process.argv.slice(2),
       OS: process.platform,
       "Node Version": process.version,
-      "Memory Usage": process.memoryUsage(),
+      "Memory Usage": process.memoryUsage().rss,
       "Execution Path": process.execPath,
       "Process ID": process.pid,
       "Current Working Directory": process.cwd(),
