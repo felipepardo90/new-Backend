@@ -26,6 +26,7 @@ router.get("/api/random", (req, res) => {
 });
 
 //!
+
 router.use("/api/products", productsRoute);
 // router.get("/", controller.index)
 router.get("/", (req, res, next) => {
