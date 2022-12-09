@@ -4,6 +4,11 @@ import productsRoute from "./products.routes.js";
 import passport from "passport";
 import controller from "../controllers/index.controller.js";
 
+//! fork
+
+import { fork } from "child_process";
+const child = fork("./desafio12/src/random.js");
+
 //! RUTAS SOLICITADAS
 router.get("/info", (req, res) => {
   res.send({
@@ -21,8 +26,17 @@ router.get("/info", (req, res) => {
 
 //? RANDOM
 
+function randomNumber(max, min) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 router.get("/api/random", (req, res) => {
-  res.send("Random");
+  let { totalQty = 100000000 } = req.query;
+  let num;
+  for (let i = 0; i < totalQty; i++) {
+    num = randomNumber(1, 1000);
+  }
+  child.on("message", (msg) => console.log("msg hijo", msg));
 });
 
 //!
