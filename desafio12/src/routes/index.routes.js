@@ -36,7 +36,8 @@ router.get("/api/random", (req, res) => {
   for (let i = 0; i < totalQty; i++) {
     num = randomNumber(1, 1000);
   }
-  child.on("message", (msg) => console.log("msg hijo", msg));
+  child.send({num})
+child.on({msg:"Message son"})
 });
 
 //!
