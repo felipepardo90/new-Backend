@@ -26,18 +26,13 @@ router.get("/info", (req, res) => {
 
 //? RANDOM
 
-function randomNumber(max, min) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 router.get("/api/random", (req, res) => {
   let { totalQty = 100000000 } = req.query;
-  let num;
-  for (let i = 0; i < totalQty; i++) {
-    num = randomNumber(1, 1000);
-  }
-  child.send({totalQty})
-child.on({msg:"Message son"})
+
+  child.send(totalQty);
+  child.on("message", (msg) => {
+    console.log("msg hijo", msg)
+  });
 });
 
 //!
