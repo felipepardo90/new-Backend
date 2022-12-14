@@ -1,17 +1,16 @@
-let counter = 0;
-let numberList = [];
+let randomList = [];
 function randomNumber(max, min) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 process.on("message", (totalQty) => {
-  let num;
+  let num, keyNumExists;
   for (let i = 0; i < totalQty; i++) {
     num = randomNumber(1, 1000);
-    numberList.push(num);
+    keyNumExists = randomList.findIndex((obj) => obj[num] === num);
+    keyNumExists === -1
+      ? randomList.push({ [num]: 1 })
+      : (randomList[keyNumExists][num] += 1);
   }
-  console.log(numberList);
-  process.send(total);
+  process.send(randomList);
 });
 //TODO cambiar esto
-
-

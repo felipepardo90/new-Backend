@@ -31,7 +31,7 @@ router.get("/api/random", (req, res) => {
 
   child.send(totalQty);
   child.on("message", (msg) => {
-    res.end(msg);
+    console.log("msg hijo", msg)
   });
 });
 
