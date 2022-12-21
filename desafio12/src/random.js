@@ -6,6 +6,7 @@ function randomNumber(max, min) {
 process.on("message", (totalQty) => {
   let num, keyNum, keyNumExists;
   for (let i = 0; i < totalQty; i++) {
+    num = randomNumber(1, 1000);
     keyNum = (obj) => obj[num];
     keyNumExists = randomList.findIndex(keyNum);
     keyNumExists === -1
