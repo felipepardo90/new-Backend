@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-config()
+config();
 
 export const PORT = process.env.PORT || 8080;
 export const MONGODB_URI = `mongodb+srv://${process.env.USER}:${process.env.PASS}@codercluster.exshfro.mongodb.net/sessions`;
