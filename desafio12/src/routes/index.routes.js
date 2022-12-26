@@ -8,6 +8,8 @@ import controller from "../controllers/index.controller.js";
 
 import { fork } from "child_process";
 const child = fork("./desafio12/src/random.js");
+import { cpus } from "os";
+const cpu = cpus();
 
 //! RUTAS SOLICITADAS
 router.get("/info", (req, res) => {
@@ -20,6 +22,7 @@ router.get("/info", (req, res) => {
       "Execution Path": process.execPath,
       "Process ID": process.pid,
       "Current Working Directory": process.cwd(),
+      "active processors": cpu.length,
     },
   });
 });
@@ -31,7 +34,7 @@ router.get("/api/random", (req, res) => {
 
   child.send(totalQty);
   child.on("message", (msg) => {
-    res.end(msg);
+    res.json(msg);
   });
 });
 
