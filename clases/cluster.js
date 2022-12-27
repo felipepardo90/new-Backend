@@ -10,14 +10,11 @@ console.log(cluster.isPrimary);
 
 if (cluster.isPrimary) {
   console.log(`Primary: ${process.pid}`);
-  for(let i = 0; i <cpu.length;i++)
-  cluster.fork();
+  for (let i = 0; i < cpu.length; i++) cluster.fork();
 
-cluster.on("exit", (worker, code, signal)=>{
-    console.log(`Worker with id ${worker.process.pid} killed`)
-})
-
-
+  cluster.on("exit", (worker, code, signal) => {
+    console.log(`Worker with id ${worker.process.pid} killed`);
+  });
 } else {
   console.log(`Worker with id ${process.pid}`);
 }
