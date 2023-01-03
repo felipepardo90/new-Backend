@@ -42,8 +42,11 @@ router.get("/api/random", (req, res) => {
 
 router.use("/api/products", productsRoute);
 // router.get("/", controller.index)
+const user = {
+  name: "Fabiola",
+};
 router.get("/", (req, res, next) => {
-  res.render("index");
+  res.render("index", { user: user });
 });
 
 router.get("/login", (req, res) => {
