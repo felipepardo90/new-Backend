@@ -4,7 +4,6 @@ import express from "express";
 
 const app = express();
 const cpu = cpus();
-console.log(cpu.length);
 
 console.log(cluster.isPrimary);
 
