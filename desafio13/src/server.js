@@ -1,4 +1,7 @@
 import app from "./app.js";
+import cluster from "cluster";
+import { cpus } from "os";
+const cpu = cpus();
 //! WEBSOCKETS
 import { Server as WebSocketServer } from "socket.io";
 import http from "http";
@@ -6,7 +9,7 @@ const server = http.createServer(app);
 const io = new WebSocketServer(server);
 //! DATABASE
 import MySQLConn from "./DB/mysql/connection.js";
-import SQLiteConn from "./DB/sqlite/connection.js"
+import SQLiteConn from "./DB/sqlite/connection.js";
 //! CONTENEDOR PRODUCTOS
 import Container from "./models/Container.js";
 const DBprod = new Container(MySQLConn, "Products");
@@ -14,10 +17,30 @@ const DBprod = new Container(MySQLConn, "Products");
 import Messages from "./models/Chat.js";
 const DBmsg = new Messages(SQLiteConn, "Messages");
 //! STARTING SERVER
+//?
+const METHOD = process.argv[2];
 
-server.listen(app.get("port"), () => {
-  console.log(`Express Server connected on port ${app.get("port")}`);
-});
+if (METHOD === "FORK") {
+
+  
+} else {
+  if (cluster.isPrimary) {
+    console.log(`Primary: ${process.pid}`);
+    for (let i = 0; i < cpu.length; i++) cluster.fork();
+
+    cluster.on("exit", (worker, code, signal) => {
+      console.log(`Worker with id ${worker.process.pid} killed`);
+    });
+  } else {
+    /* --------------------------------------------------------------------------- */
+    server.listen(app.get("port"), () => {
+      console.log(`Express Server connected on port ${app.get("port")}`);
+    });
+  }
+}
+/* --------------------------------------------------------------------------- */
+
+//?
 
 //! ERROR HANDLER
 

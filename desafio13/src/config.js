@@ -10,14 +10,16 @@ const yargs = Yargs(process.argv.slice(2));
 const result = yargs
   .alias({
     p: "port",
+    m: "method",
   })
   .default({
     port: 8080,
+    method: "FORK",
   }).argv;
 
-const { port } = result;
-
-export const PORT = process.env.PORT || 8080;
+const { port, method } = result;
+export const METHOD = method;
+export const PORT = process.env.PORT || port;
 export const MONGODB_URI = `mongodb://localhost:27017/sessions`;
 // ? export const MONGODB_URI = `mongodb+srv://${process.env.USER}:${process.env.PASS}@codercluster.exshfro.mongodb.net/sessions`;
 
