@@ -1,5 +1,5 @@
 import passport from "passport";
-import LocalStrategy from "passport-local";
+import Strategy from "passport-local";
 import User from "../models/Users.js";
 
 passport.serializeUser((user, done) => {
@@ -12,24 +12,36 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(
-  "local-signup",
-  new LocalStrategy(
-    {
-      usernameField: "email",
-      passwordField: "password",
-      passReqToCallbacks: true,
-    },
-    async (req, email, password, done) => {
-      try {
-        const newUser = new User();
-        newUser.email = email;
-        newUser.password = newUser.encryptPass(password);
-        await newUser.save();
-        done(null, newUser);
-        
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  )
+  "signup",
+  new Strategy({ passReqToCallback: true }, (req, username, password, done) => {
+    console.log(username, password);
+
+    const { email } = req.body;
+    Users.findOne({ username }, (err, user) => {
+      console.log(user);
+      console.log(err);
+      if (user) return done(null, false);
+
+      Users.create(
+        { username, password: hasPassword(password), email },
+        (err, user) => {
+          if (err) return done(err);
+          //null    // obj // truthy
+          return done(null, user);
+        }
+      );
+    });
+  })
+);
+
+passport.use(
+  "login",
+  new Strategy({}, (username, password, done) => {
+    Users.findOne({ username }, (err, user) => {
+      if (err) return done(err);
+      if (!user) return done(null, false);
+      if (!validatePass(password, user.password)) return done(null, false);
+      return done(null, user);
+    });
+  })
 );
