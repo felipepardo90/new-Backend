@@ -38,32 +38,13 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 60000,
+      maxAge: 10000,
     },
   })
 );
-app.use("/", indexRoute); //
+import("./libs/local.auth.js"); //? Passport CONFIGS
 app.use(passport.initialize());
 app.use(passport.session());
-
-//* PRUEBAS
-
-// app.get("/", (req, res) => {
-//   req.session.user ? res.render("index") : res.render("login");
-// });
-
-// app.post("/", (req, res) => {
-//   const { user } = req.body;
-//   req.session.user = user;
-//   res.redirect("/");
-// });
-// // app.post("/register");
-// app.get("/logout", (req, res) => {
-//   req.session.destroy((err) => {
-//     res.redirect("/");
-//   });
-// });
-
-//*
+app.use("/", indexRoute);
 
 export default app;

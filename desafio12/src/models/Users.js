@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
-const { Schema } = mongoose;
 
 const userSchema = new Schema({
+  username: String,
   email: String,
   password: String,
 });

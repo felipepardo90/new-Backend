@@ -1,20 +1,12 @@
-import mongoose from "mongoose";
 import { MONGODB_URI } from "../../config";
 
-try {
-  const db = await mongoose.connect(MONGODB_URI);
-  console.log("Connected to ", db.connection.name);
-  
-} catch (error) {
-  console.error(error);
-}
+const Config = {
+  mongodb: {
+    url: MONGODB_URI,
+    options: {
+      serverSelectionTimeoutMS: 10000,
+    },
+  },
+};
 
-mongoose.connection.on("connected", () => {
-  console.log("Mongoose is connected");
-});
-
-mongoose.connection.on("disconnected", () => {
-  console.log("Mongoose is disconnected");
-});
-
-export default db
+export default Config;

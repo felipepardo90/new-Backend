@@ -11,5 +11,5 @@ body {
   min-height: 100vh;
 }
 
-
-@import "_form.scss", "_chat.scss", "_products.table.scss"
+@import "_form.scss", "_chat.scss", "_products.table.scss", "_login-form.scss",
+  "_register-form.scss";

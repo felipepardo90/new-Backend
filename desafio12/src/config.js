@@ -18,7 +18,7 @@ const result = yargs
 const { port } = result;
 
 export const PORT = process.env.PORT || 8080;
-export const MONGODB_URI = `mongodb://localhost:27017/sessions`;
+export const MONGODB_URI = process.env.MONGODB_URI;
 // ? export const MONGODB_URI = `mongodb+srv://${process.env.USER}:${process.env.PASS}@codercluster.exshfro.mongodb.net/sessions`;
 
 //! PATH
