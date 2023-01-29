@@ -15,5 +15,5 @@ if (cluster.isPrimary) {
     console.log(`Worker with id ${worker.process.pid} killed`);
   });
 } else {
-  console.log(`Worker with id ${process.pid}`);
+  console.log(`Worker with id ${process.pid}`)
 }
