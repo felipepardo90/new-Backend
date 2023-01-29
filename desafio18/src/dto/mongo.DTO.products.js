@@ -1,11 +1,13 @@
-const ProductDTO = ({ _id, name, price, imageUrl, description, stock }) => {
+const DTOProduct = (product) => {
   return {
-    name,
-    price,
-    image,
-    description,
-    stock,
-    id: _id,
+    title:product.title,
+    price:product.price,
+    thumbnail:product.thumbnail,
+    description:product.description,
+    code:product.code,
+    stock:product.stock,
+    timestamp:product.timestamp,
+    id: product.id,
   };
 };
-export default ProductDTO;
+export default DTOProduct;
