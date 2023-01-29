@@ -1,3 +1,4 @@
+import DTOProduct from "../dto/mongo.DTO.products.js";
 import MongoContainer from "../models/Mongo Pers/Container.js";
 
 class DAOProductsMongo extends MongoContainer {
@@ -12,6 +13,12 @@ class DAOProductsMongo extends MongoContainer {
       timestamp: String,
     });
   }
+
+  async getById(id) {
+    const data = await super.getById(id);
+    return new DTOProduct(data);
+  }
 }
 
 export default DAOProductsMongo;
+s;
