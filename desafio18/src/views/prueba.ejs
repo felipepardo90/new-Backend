@@ -1,4 +1,10 @@
-<form action="prueba" method="POST" enctype="multipart/form-data">
-  <input type="file" name="avatar"/>
-  <input type="submit" value="Send"> 
-</form>
+<% if(data) { %>
+  <h1>Bienvenida/o <%= data.username %>
+  </h1>
+  <br />
+  <%}%>
+
+    <form action="prueba" method="POST" enctype="multipart/form-data">
+      <input type="file" name="avatar" />
+      <input type="submit" value="Send">
+    </form>
