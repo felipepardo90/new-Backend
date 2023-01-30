@@ -20,7 +20,7 @@ body {
   background-color: green;
   margin: 30px auto;
   width: 90%;
-  max-width: 800px;
+  max-width: 500px;
   padding: 4.5em 3em;
   border-radius: 10px;
   box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.3);
@@ -44,6 +44,7 @@ body {
 .form-container {
   margin-top: 3em;
   display: grid;
+  gap: 20px;
 }
 .form-container .form-group {
   position: relative;
@@ -128,6 +129,21 @@ body {
 .form-container .form-submit:hover {
   background-color: blue;
   color: yellow;
+}
+.form-container textarea {
+  padding: 10px;
+  font-size: medium;
+  color: white;
+  background-color: forestgreen;
+  border: none;
+  border-radius: 8px;
+}
+.form .textarea {
+  padding: 10px;
+  color: white;
+  background-color: forestgreen;
+  border: none;
+  border-radius: 12px;
 }
 
 @media (max-width: 425px) {
