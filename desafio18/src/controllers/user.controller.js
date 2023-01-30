@@ -21,7 +21,7 @@ controller.renderLoginView = (req, res) => {
 };
 
 controller.logInUser = passport.authenticate("login", {
-  successRedirect: "/profile",
+  successRedirect: "/",
   failureRedirect: "/login",
   passReqToCallback: true,
 });

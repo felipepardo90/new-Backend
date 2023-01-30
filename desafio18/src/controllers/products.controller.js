@@ -53,7 +53,7 @@ controller.delete = async (req, res) => {
   const data = await DAOProducts.deleteById(req.params.id);
   data
     ? res.status(200).send({
-        message: `Se ha eliminado el producto`,
+        message: "Se ha eliminado el producto",
         "product deleted": data,
       })
     : res.status(404).send({ message: "No se ha encontrado el producto" });
