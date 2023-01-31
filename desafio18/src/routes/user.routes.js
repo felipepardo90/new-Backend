@@ -4,7 +4,7 @@ import { MW } from "../libs/middlewares.js";
 const router = Router();
 
 //! Register
-router.get("/register", MW.isNotAuth, controller.renderRegistryView);
+router.get("/register", controller.renderRegistryView);
 router.post("/register", controller.signUpUser);
 //! Login
 router.get("/login", controller.renderLoginView);

@@ -11,9 +11,6 @@ router.get("/", MW.isAuth, renderIndexView);
 router.use("/", usersRoute);
 router.use("/api/products", MW.isAuth, productsRoute);
 router.use("/api/cart", MW.isAuth, cartRoute);
-router.use("/prueba", (req, res) => {
-  const user = req.user;
-  res.render("prueba", { data: user });
-});
+
 
 export default router;

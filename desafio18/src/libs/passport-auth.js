@@ -23,6 +23,7 @@ passport.use(
     },
     async (req, username, password, done) => {
       const { email } = req.body;
+      const { avatar } = req.file;
 
       const userFound = await DAOUsers.findByEmail(email);
       if (userFound) {
@@ -36,6 +37,7 @@ passport.use(
           username,
           password: DAOUsers.encryptPass(password),
           email,
+          avatar,
         });
         done(null, user);
       }

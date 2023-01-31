@@ -17,7 +17,3 @@ MW.isAuth = (req, res, next) => {
   }
   res.redirect("/login");
 };
-
-MW.isNotAuth = (req, res, next) => {
-  req.isAuthenticated() || next();
-};

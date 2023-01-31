@@ -4,8 +4,6 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import flash from "connect-flash";
 import indexRoute from "./routes/index.routes.js";
-// import multer from "multer";
-// const upload = multer({ dest: "./public/uploads/" });
 import morgan from "morgan";
 //! __DIRNAME PATH
 import path from "path";
@@ -57,22 +55,6 @@ app.use((req, res, next) => {
   app.locals.user = req.user;
   next();
 });
-
-//! MULTER
-
-// app.get("/prueba", (req, res) => {
-//   res.render("prueba");
-// });
-// app.post("/prueba", upload.single("avatar"), (req, res) => {
-//   const file = req.file;
-//   res.send({
-//     error: false,
-//     msg: "File upload succesfully!!!",
-//     "original name": file.originalname,
-//     destination: file.destination,
-//     filename: file.filename,
-//   });
-// });
 
 //! ROUTES
 

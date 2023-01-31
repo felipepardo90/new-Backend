@@ -286,4 +286,14 @@ table tbody img {
   border: 1px solid green;
   border-radius: 5px;
   box-shadow: 2px 2px 5px green;
+}
+
+.register-form {
+  min-width: 50px;
+  margin: 60px auto;
+  padding: 40px 60px;
+  border: 1px solid green;
+  box-shadow: 6px 6px 15px darkgreen;
+  border-radius: 12px;
+  background-color: lightgreen;
 }/*# sourceMappingURL=main.css.map */

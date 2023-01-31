@@ -6,11 +6,10 @@ const userSchema = new Schema({
   //   address: String,
   //   age: Number,
   //   phone: Number,
-  //   avatar: String,
+  avatar: { type: String },
   email: { type: String },
   password: { type: String },
 });
-
 
 export default class DAOUsersMongo extends User {
   constructor() {

@@ -5,11 +5,11 @@ const controller = {};
 //! REGISTER
 
 controller.renderRegistryView = (req, res) => {
-  res.render("register");
+  !req.user ? res.render("register") : res.render("index");
 };
 
 controller.signUpUser = passport.authenticate("signup", {
-  successRedirect: "/login",
+  successRedirect: "/",
   failureRedirect: "/register",
   passReqToCallback: true,
 });
@@ -17,7 +17,7 @@ controller.signUpUser = passport.authenticate("signup", {
 //! LOGIN
 
 controller.renderLoginView = (req, res) => {
-  res.render("login");
+  !req.user ? res.render("login") : res.render("index");
 };
 
 controller.logInUser = passport.authenticate("login", {
@@ -35,9 +35,10 @@ controller.renderProfileView = (req, res) => {
 //! LOGOUT
 
 controller.logoutUser = (req, res) => {
-  req.session.destroy((err) => {
-    res.redirect("login");
+  req.logout((err) => {
+    console.log(err);
   });
+  res.redirect("/");
 };
 
 export default controller;
