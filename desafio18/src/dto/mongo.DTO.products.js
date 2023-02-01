@@ -1,13 +1,9 @@
-const DTOProduct = (product) => {
+const DTOProduct = ({ title, price, thumbnail, description }) => {
   return {
-    title:product.title,
-    price:product.price,
-    thumbnail:product.thumbnail,
-    description:product.description,
-    code:product.code,
-    stock:product.stock,
-    timestamp:product.timestamp,
-    id: product.id,
+    title,
+    price,
+    thumbnail,
+    description,
   };
 };
 export default DTOProduct;

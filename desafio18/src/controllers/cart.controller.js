@@ -3,6 +3,10 @@ import { DAOProducts, DAOCarts } from "../daos/DAO.Factory.js";
 //! DAOS /////////////////////////////////
 const controller = {};
 
+controller.getCart = (req, res) => {
+  res.render("cart", { cart: null, path:"/cart/:id"});
+};
+
 controller.newCart = async (req, res) => {
   const data = await DAOCarts.newCart();
   res.status(200).json({
@@ -16,7 +20,7 @@ controller.deleteCart = async (req, res) => {
   const data = await DAOCarts.deleteCartById(req.params.id);
   data
     ? res.status(200).json({
-        message: `Se ha eliminado el carrito`,
+        message: "Se ha eliminado el carrito",
         "cart deleted": `${req.params.id}`,
       })
     : res
@@ -64,7 +68,7 @@ controller.saveProductInCart = async (req, res) => {
 controller.deleteProductInCart = async (req, res) => {
   const { id, id_prod } = req.params;
   const data = await DAOCarts.deleteProductInCartById(id, id_prod);
-  data != undefined
+  data !== undefined
     ? res.status(200).json({
         message: `Se ha eliminado el producto ${data.title} del carrito ${id}`,
       })
