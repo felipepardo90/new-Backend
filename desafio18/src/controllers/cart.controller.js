@@ -1,5 +1,5 @@
 //! DAOS /////////////////////////////////
-import { DAOProducts, DAOCarts } from "../daos/index.js";
+import { DAOProducts, DAOCarts } from "../daos/DAO.Factory.js";
 //! DAOS /////////////////////////////////
 const controller = {};
 

@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
-import { DAOUsers } from "../daos/index.js";
+import { DAOUsers } from "../daos/DAO.Factory.js";
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
