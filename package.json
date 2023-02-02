@@ -9,10 +9,12 @@
     "url": "git+https://github.com/felipepardo90/new-Backend.git"
   },
   "scripts": {
-    "start": "node desafio18/src/server.js",
-    "dev": "nodemon desafio18/src/server.js"
+    "start": "node desafio19/src/server.js",
+    "dev": "nodemon desafio19/src/server.js",
+    "test": "mocha desafio19/test/index.test.js"
   },
   "dependencies": {
+    "axios": "^1.3.1",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "connect-flash": "^0.1.1",
@@ -38,7 +40,10 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
-    "nodemon": "^2.0.19"
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.19",
+    "supertest": "^6.3.3"
   },
   "keywords": [],
   "author": "",
