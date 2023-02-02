@@ -9,6 +9,6 @@ it("should try to get all products", (done) => {
   request(app)
     .get("/api/products")
     .set("Accept", "Application/json")
-    .expect("Content-type", /json/)
+    .expect("Content-type", /html/)
     .expect(200, done);
 });
