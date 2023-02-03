@@ -29,7 +29,7 @@ controller.post = async (req, res) => {
     ? res
         .status(500)
         .json({ message: `[[${req.body.title}]] ya existe en el archivo` })
-    : res.status(200).render("index");
+    : res.status(201).render("index");
 };
 
 //? RECIBE Y ACTUALIZA UN PRODUCTO SEGÚN SU ID
