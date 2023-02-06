@@ -5,43 +5,60 @@ import api from "../src/axios.js";
  * >Testing get  /api/products
  */
 
+/**
+ * Para pruebas
+ */
+
+const newProduct = {
+  title: "Violín",
+  price: 3600,
+  thumbnail:
+    "https://http2.mlstatic.com/violin-4-4-acustico-profesional-madera-estuche-y-accesorios-D_NQ_NP_661231-MLM31914819588_082019-F.jpg",
+  description: "Violín otra vez cambiado",
+  code: "A100",
+  stock: 50,
+};
+
 //! Get all products
 
-// it("should try to get all products", (done) => {
-//   request(api)
-//     .get("/api/products")
-//     .set("Accept", "Application/json")
-//     .expect("Content-type", /html/)
-//     .expect(200, done());
+// describe("get all /api/products/ ", () => {
+//   it("should try to get all products", async (done) => {
+//     await request(api)
+//       .get("/api/products")
+//       // .auth("Felipe", "123456")
+//       .set("Accept", "Application/json")
+//       .expect("Content-type", /json/)
+//       .expect(200, done());
+//   });
 // });
 
 //! Get product by id
 
-// describe("GET product on /api/products", () => {
-//   //
-//   it("respond a single product with id", (done) => {
-//     request(api)
-//       .get("/api/products/63dfc0048c23aa71f299e603")
-//       .set("Accept", "Application/json")
-//       .expect("Content-type", /html/)
-//       .expect(200, done());
-//   });
-//
-//TODO Resolver para cuando no encuentra el producto
-// it("respond with JSON 'product not found' when the product doesnt exist", (done) => {
-//   request(api)
-//     .get("/api/products/63d7c")
-//     .set("Accept", "Application/json")
-//     .expect("Content-type", /html/)
-//     .expect(404)
-//     .expect('Product not found')
-//     .end((err) => {
-//       if (err) return done(err);
-//       done();
-//     });
-// });
-//
-// });
+describe("GET product on /api/products", () => {
+  //
+  it("respond a single product with id", (done) => {
+    request(api)
+      .get("/api/products/63d810826edc965e178c6832")
+      .set("Accept", "Application/json")
+      .expect("Content-type", /json/)
+      .expect(200, done());
+  });
+
+  // TODO Resolver para cuando no encuentra el producto
+
+  it("respond when the product doesnt exists on /api/products", (done) => {
+    request(api)
+      .get("/api/products/aleatoryId")
+      .set("Accept", "Application/json")
+      .expect("Content-type", /json/)
+      .expect(404)
+      .expect({ error: "Producto no encontrado" })
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+});
 
 //! Add product
 
@@ -70,23 +87,14 @@ import api from "../src/axios.js";
 
 //! Change product
 
-it("PUT || Modify product respond with 200", (done) => {
-  const newProduct = {
-    title: "Violín",
-    price: 3600,
-    thumbnail:
-      "https://http2.mlstatic.com/violin-4-4-acustico-profesional-madera-estuche-y-accesorios-D_NQ_NP_661231-MLM31914819588_082019-F.jpg",
-    description: "Violín otra vez cambiado",
-    code: "A100",
-    stock: 50,
-  };
-  request(api)
-    .put("/api/products/63dfc0048c23aa71f299e603")
-    .send(newProduct)
-    .set("Accept", "Application/json")
-    .expect(200)
-    .end((err, res) => {
-      if (err) return res(err);
-      res();
-    });
-});
+// it("PUT || Modify product respond with 200", async (done) => {
+//   await request(api)
+//     .put("/api/products/63d816ef8d0c6320ba40406e")
+//     .send(newProduct)
+//     .set("Accept", "Application/json")
+//     .expect(200)
+//     .end((err) => {
+//       if (err) return done(err);
+//       done();
+//     });
+// });

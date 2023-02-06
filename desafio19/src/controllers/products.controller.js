@@ -7,7 +7,8 @@ const controller = {};
 
 controller.getAll = async (req, res) => {
   const data = await DAOProducts.getAll();
-  res.render("products", { products: data });
+  // res.render("products", { products: data });
+  res.json({ products: data });
 };
 
 //? DEVUELVE UN PRODUCTO SEGÚN SU ID
@@ -16,7 +17,8 @@ controller.getById = async (req, res) => {
   const data = await DAOProducts.getById(req.params.id);
 
   //! Si el id generado no coincide con ningún producto, devuelve null; de lo contrario, envía la información solicitada
-  data
+
+  data != null
     ? res.status(200).json(data)
     : res.status(404).json({ error: "Producto no encontrado" });
 };
@@ -38,7 +40,6 @@ controller.put = async (req, res) => {
   const { id } = req.params;
   const newObject = req.body;
   const data = await DAOProducts.update(id, newObject);
-
   data != null
     ? res.status(200).json({
         message: `Producto ${id} modificado con éxito`,

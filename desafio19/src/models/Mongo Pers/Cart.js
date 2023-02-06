@@ -76,7 +76,7 @@ export default class Cart {
 
       const data = await this.db.find({ _id: idCart }, { products: 1 });
       const productsInData = data[0].products;
-      const productFound = productsInData.find(({ _id }) => (_id == idProduct));
+      const productFound = productsInData.find(({ _id }) => (_id === idProduct));
 
       // console.log("|Í", data, "|Í");
       // console.log("|Í", productsInData, "|Í");

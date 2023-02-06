@@ -33,8 +33,7 @@ export default class Container {
 
   async getById(idEntered) {
     try {
-      const data = this.db.find({ _id: idEntered }); //TODO arreglar cuando no trae nada
-      return data;
+      return await this.db.find({ _id: idEntered });
     } catch (error) {
       console.error(`Se produjo un error en getByID: ${error}`);
     }
@@ -42,8 +41,7 @@ export default class Container {
 
   async getAll() {
     try {
-      const data = await this.db.find({});
-      return data;
+      return await this.db.find({});
     } catch (error) {
       console.error(`Se ha producido un error en getAll: ${error}`);
     }
