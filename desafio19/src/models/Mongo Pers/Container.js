@@ -33,7 +33,7 @@ export default class Container {
 
   async getById(idEntered) {
     try {
-      const data = this.db.find({ _id: idEntered });
+      const data = this.db.find({ _id: idEntered }); //TODO arreglar cuando no trae nada
       return data;
     } catch (error) {
       console.error(`Se produjo un error en getByID: ${error}`);
