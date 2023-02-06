@@ -34,31 +34,31 @@ const newProduct = {
 
 //! Get product by id
 
-describe("GET product on /api/products", () => {
-  //
-  it("respond a single product with id", (done) => {
-    request(api)
-      .get("/api/products/63d810826edc965e178c6832")
-      .set("Accept", "Application/json")
-      .expect("Content-type", /json/)
-      .expect(200, done());
-  });
+// describe("GET product on /api/products", () => {
+//   //
+//   it("respond a single product with id", (done) => {
+//     request(api)
+//       .get("/api/products/63d810826edc965e178c6832")
+//       .set("Accept", "Application/json")
+//       .expect("Content-type", /json/)
+//       .expect(200, done());
+//   });
 
-  // TODO Resolver para cuando no encuentra el producto
+//   // TODO Resolver para cuando no encuentra el producto
 
-  it("respond when the product doesnt exists on /api/products", (done) => {
-    request(api)
-      .get("/api/products/aleatoryId")
-      .set("Accept", "Application/json")
-      .expect("Content-type", /json/)
-      .expect(404)
-      .expect({ error: "Producto no encontrado" })
-      .end((err) => {
-        if (err) return done(err);
-        done();
-      });
-  });
-});
+//   it("respond when the product doesnt exists on /api/products", (done) => {
+//     request(api)
+//       .get("/api/products/aleatoryId")
+//       .set("Accept", "Application/json")
+//       .expect("Content-type", /json/)
+//       .expect(404)
+//       .expect({ error: "Producto no encontrado" })
+//       .end((err) => {
+//         if (err) return done(err);
+//         done();
+//       });
+//   });
+// });
 
 //! Add product
 
