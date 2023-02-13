@@ -2,62 +2,16 @@ import { Router } from "express";
 const router = Router();
 import { graphqlHTTP } from "express-graphql";
 import { buildSchema } from "graphql";
+import typeDef from "./product.schema.js";
+import { DAOProducts } from "../daos/DAO.Factory.js";
 
-const schema = buildSchema(`type User {
-    id: String, 
-    name: String, 
-    lastname: String, 
-    age: Int, 
-    isStudent: Boolean
-}
-
-input userData {
-    id: String, 
-    name: String,
-    lastname: String, 
-    age: Int
-}
-
-type Query {
-getUserById(id: String!): User
-getAllUsers: [User]
-}
-
-type Mutation {
-    UpdateUserProfile(data: userData): User
-}
-
-`);
-
-const getUserById = ({ id }) => {
-  return {
-    id,
-    name: "Felipe",
-    lastname: "Pardo",
-    age: 32,
-    isStudent: true,
-  };
-};
-
-const UpdateUserProfile = ({ data }) => {
-  console.log(data);
-  return {
-    id,
-    name: "Felipe",
-    lastname: "Pardo",
-    age: 32,
-    isStudent: true,
-  };
-};
+const productsSchema = buildSchema(typeDef);
 
 router.use(
   "/graphql",
   graphqlHTTP({
-    schema,
-    rootValue: {
-      getUserById,
-      UpdateUserProfile,
-    },
+    schema: productsSchema,
+    rootValue: { DAOProducts },
     graphiql: true,
   })
 );
