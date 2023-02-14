@@ -1,11 +1,9 @@
 export default {
   Query: {
-    getProductById: async (parent, args, { DAOProducts }) => {
-      const products = await DAOProducts.getById();
-      return products.map((item) => {
-        item._id = item._id.toString();
-        return item;
-      });
+    product: async (parent, args, { DAOProducts }) => {
+      const product = await DAOProducts.getById(args.id);
+      product._id = product._id.toString();
+      return product;
     },
   },
   Mutation: {},

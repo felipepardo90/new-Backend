@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 import { graphqlHTTP } from "express-graphql";
 import { buildSchema } from "graphql";
-import typeDef from "./product.schema.js";
+import typeDef from "./products.schema.js";
 import { DAOProducts } from "../daos/DAO.Factory.js";
 
 const productsSchema = buildSchema(typeDef);
