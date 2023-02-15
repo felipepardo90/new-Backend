@@ -9,8 +9,8 @@
     "url": "git+https://github.com/felipepardo90/new-Backend.git"
   },
   "scripts": {
-    "start": "node desafio19/src/server.js",
-    "dev": "nodemon desafio19/src/server.js",
+    "start": "node desafio20/src/server.js",
+    "dev": "nodemon desafio20/src/server.js",
     "test": "mocha desafio19/test/index.test.js --timeout 5000 --exit"
   },
   "dependencies": {

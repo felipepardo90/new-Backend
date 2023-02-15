@@ -29,12 +29,6 @@
                     <td>
                       <a href="/api/products/<%= item.id %>">Ver</a>
                     </td>
-                    <td style="font-size: xx-large; font-weight: bold; color: green;">
-                      <form action="/<%= cart.id %>/products" method="POST">
-                        <input type="hidden" name="id" value="<%=p.id%>">
-                        <button type="submit" class="btn btn-primary">Delete</button>
-                      </form>
-                    </td>
                   </tr>
                   <% }) %>
               </tbody>
