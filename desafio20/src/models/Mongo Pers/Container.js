@@ -11,8 +11,7 @@ export default class Container {
 
   async save(object) {
     try {
-      await this.db.create({ ...object, timestamp: this.date });
-      return object;
+      return await this.db.create({ ...object, timestamp: this.date });
     } catch (error) {
       console.error(`Se produjo un error en save:${error}`);
     }
@@ -33,8 +32,8 @@ export default class Container {
 
   async getById(idEntered) {
     try {
-      const data = this.db.find({ _id: idEntered });
-      return data;
+      const data = await this.db.find({ _id: idEntered });
+      return data[0];
     } catch (error) {
       console.error(`Se produjo un error en getByID: ${error}`);
     }
