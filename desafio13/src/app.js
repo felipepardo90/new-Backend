@@ -17,7 +17,7 @@ const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 //! SETTINGS
 
 app.set("port", PORT); //! CONFIG port
-app.set("json spaces", 2); //! JSON formatter
+app.set("jsonspaces", 2); //! JSON formatter
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs"); //! VIEW ENGINES
 
@@ -26,7 +26,7 @@ app.set("view engine", "ejs"); //! VIEW ENGINES
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(exp  ress.json());
 app.use("/", express.static(path.join(__dirname, "../public"))); //! STATIC FILES
 app.use(
   session({
